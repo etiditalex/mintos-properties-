@@ -9,6 +9,7 @@ import clsx from "clsx";
 import { BrandLogo } from "@/components/layout/BrandLogo";
 import { FindHomeSearchDrawer } from "@/components/layout/FindHomeSearchDrawer";
 import { MobileMenuDrawer } from "@/components/layout/MobileMenuDrawer";
+import { BodyPortal } from "@/components/ui/BodyPortal";
 import { useProfileRole } from "@/hooks/useProfileRole";
 import { useSavedProperties } from "@/hooks/useSavedProperties";
 
@@ -49,15 +50,17 @@ export function PublicNavMobile({ variant = "site" }: PublicNavMobileProps) {
 
   return (
     <>
-      <FindHomeSearchDrawer open={findHomeOpen} onClose={() => setFindHomeOpen(false)} />
+      <BodyPortal>
+        <FindHomeSearchDrawer open={findHomeOpen} onClose={() => setFindHomeOpen(false)} />
 
-      <MobileMenuDrawer
-        open={menuOpen}
-        onClose={() => setMenuOpen(false)}
-        showExtras={showMenuExtras}
-        savedCount={savedIds.length}
-        menuId={NAV_MENU_MOBILE_ID}
-      />
+        <MobileMenuDrawer
+          open={menuOpen}
+          onClose={() => setMenuOpen(false)}
+          showExtras={showMenuExtras}
+          savedCount={savedIds.length}
+          menuId={NAV_MENU_MOBILE_ID}
+        />
+      </BodyPortal>
 
       <header
         className={clsx(

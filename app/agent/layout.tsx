@@ -10,12 +10,7 @@ export const metadata: Metadata = {
 export default function AgentLayout({ children }: { children: React.ReactNode }) {
   return (
     <div
-      className="flex min-h-screen bg-[#f4f6f9] font-sans text-slate-800 antialiased"
-      style={{
-        minHeight: "100vh",
-        backgroundColor: "#f4f6f9",
-        fontFamily: 'system-ui, -apple-system, "Segoe UI", Roboto, sans-serif',
-      }}
+      className="flex min-h-screen bg-[#f4f6f9] text-slate-800 antialiased"
     >
       <AdminSidebar />
       <div className="flex min-h-screen min-w-0 flex-1 flex-col">

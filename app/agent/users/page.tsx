@@ -5,6 +5,8 @@ import { MoreHorizontal, UserCircle2, Users as UsersIcon } from "lucide-react";
 
 import { AgentPageHeader } from "@/components/admin/AgentPageHeader";
 import { Badge } from "@/components/ui/Badge";
+import { Button } from "@/components/ui/Button";
+import { Input } from "@/components/ui/Input";
 import { createSupabaseBrowserClient } from "@/lib/supabase/client";
 import { Database } from "@/types/database";
 
@@ -16,6 +18,12 @@ export default function AgentUsersPage() {
   const [error, setError] = useState<string | null>(null);
   const [updatingUserId, setUpdatingUserId] = useState<string | null>(null);
   const [message, setMessage] = useState<string | null>(null);
+  const [creating, setCreating] = useState(false);
+
+  const [newFullName, setNewFullName] = useState("");
+  const [newEmail, setNewEmail] = useState("");
+  const [newPassword, setNewPassword] = useState("");
+  const [newRole, setNewRole] = useState<AppRole>("client");
 
   const loadUsers = async () => {
     try {
@@ -39,6 +47,39 @@ export default function AgentUsersPage() {
   useEffect(() => {
     void loadUsers();
   }, []);
+
+  const onCreateUser = async () => {
+    setError(null);
+    setMessage(null);
+    setCreating(true);
+    try {
+      const res = await fetch("/api/admin/create-user", {
+        method: "POST",
+        headers: { "content-type": "application/json" },
+        body: JSON.stringify({
+          fullName: newFullName,
+          email: newEmail,
+          password: newPassword,
+          role: newRole,
+        }),
+      });
+      const data = (await res.json()) as { ok?: boolean; error?: string };
+      if (!res.ok || !data.ok) {
+        setError(data.error ?? "Unable to create user.");
+        return;
+      }
+      setMessage("User created.");
+      setNewFullName("");
+      setNewEmail("");
+      setNewPassword("");
+      setNewRole("client");
+      await loadUsers();
+    } catch {
+      setError("Unable to create user.");
+    } finally {
+      setCreating(false);
+    }
+  };
 
   const onRoleChange = async (userId: string, role: AppRole) => {
     setError(null);
@@ -78,6 +119,59 @@ export default function AgentUsersPage() {
         title="Users"
         breadcrumb="Dashboard / Users"
       />
+
+      <div className="rounded-2xl border border-slate-100 bg-white p-6 shadow-sm">
+        <div className="mb-6">
+          <p className="text-xs font-semibold uppercase tracking-[0.15em] text-brand">Admin</p>
+          <h2 className="mt-1 text-lg font-bold text-slate-900">Create user</h2>
+          <p className="mt-1 text-sm text-slate-500">
+            Creates a Supabase Auth user + profile. Requires server `SUPABASE_SERVICE_ROLE_KEY`.
+          </p>
+        </div>
+        <div className="grid gap-4 md:grid-cols-2">
+          <Input
+            id="new_user_full_name"
+            label="Full name"
+            value={newFullName}
+            onChange={(e) => setNewFullName(e.target.value)}
+            required
+          />
+          <label className="grid gap-2 text-sm text-zinc-700" htmlFor="new_user_role">
+            <span className="font-medium">Role</span>
+            <select
+              id="new_user_role"
+              value={newRole}
+              onChange={(e) => setNewRole(e.target.value as AppRole)}
+              className="h-11 rounded-sm border border-zinc-300 bg-white px-3 text-sm text-black outline-none transition-colors focus:border-brand/40 focus:ring-2 focus:ring-brand/20"
+            >
+              <option value="client">client</option>
+              <option value="agent">agent</option>
+              <option value="admin">admin</option>
+            </select>
+          </label>
+          <Input
+            id="new_user_email"
+            label="Email"
+            value={newEmail}
+            onChange={(e) => setNewEmail(e.target.value)}
+            placeholder="name@example.com"
+            required
+          />
+          <Input
+            id="new_user_password"
+            label="Password (min 8 chars)"
+            type="password"
+            value={newPassword}
+            onChange={(e) => setNewPassword(e.target.value)}
+            required
+          />
+          <div className="md:col-span-2">
+            <Button onClick={() => void onCreateUser()} disabled={creating}>
+              {creating ? "Creating…" : "Create user"}
+            </Button>
+          </div>
+        </div>
+      </div>
 
       <div className="grid grid-cols-1 gap-4 sm:grid-cols-3">
         <div className="flex items-center gap-4 rounded-2xl border border-slate-100 bg-white p-5 shadow-sm">

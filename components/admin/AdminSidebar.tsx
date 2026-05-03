@@ -7,6 +7,7 @@ import {
   Building2,
   ExternalLink,
   Home,
+  Image as ImageIcon,
   LayoutDashboard,
   MapPin,
   MessageSquareQuote,
@@ -30,6 +31,7 @@ const navItems: NavItem[] = [
   { label: "Properties", href: "/agent/properties", match: "/agent/properties", icon: Building2 },
   { label: "Blog", href: "/agent/blogs", match: "/agent/blogs", icon: BookOpen },
   { label: "Testimonials", href: "/agent/testimonials", match: "/agent/testimonials", icon: MessageSquareQuote },
+  { label: "Gallery", href: "/agent/gallery", match: "/agent/gallery", icon: ImageIcon },
 ];
 
 export function AdminSidebar() {

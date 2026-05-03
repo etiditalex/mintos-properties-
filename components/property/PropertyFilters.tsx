@@ -46,7 +46,14 @@ export function PropertyFilters({
           id="type-filter"
           className="h-11 rounded-sm border border-zinc-300 px-3 text-sm outline-none focus:border-brand"
           value={filters.type}
-          onChange={(event) => onChange({ ...filters, type: event.target.value })}
+          onChange={(event) =>
+            onChange({
+              ...filters,
+              type: event.target.value,
+              // If a user arrived via FindHomeSearchDrawer (`types=...`), dropdown must take over.
+              selectedTypes: [],
+            })
+          }
         >
           {propertyTypes.map((type) => (
             <option key={type} value={type}>

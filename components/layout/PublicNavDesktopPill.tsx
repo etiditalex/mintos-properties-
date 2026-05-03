@@ -9,6 +9,7 @@ import clsx from "clsx";
 import { BrandLogo } from "@/components/layout/BrandLogo";
 import { FindHomeSearchDrawer } from "@/components/layout/FindHomeSearchDrawer";
 import { MobileMenuDrawer } from "@/components/layout/MobileMenuDrawer";
+import { BodyPortal } from "@/components/ui/BodyPortal";
 import { useProfileRole } from "@/hooks/useProfileRole";
 import { useSavedProperties } from "@/hooks/useSavedProperties";
 
@@ -40,15 +41,17 @@ export function PublicNavDesktopPill({ variant = "site" }: PublicNavDesktopPillP
 
   return (
     <>
-      <FindHomeSearchDrawer open={findHomeOpen} onClose={() => setFindHomeOpen(false)} />
+      <BodyPortal>
+        <FindHomeSearchDrawer open={findHomeOpen} onClose={() => setFindHomeOpen(false)} />
 
-      <MobileMenuDrawer
-        open={menuOpen}
-        onClose={() => setMenuOpen(false)}
-        showExtras={showMenuExtras}
-        savedCount={savedIds.length}
-        menuId={NAV_MENU_DESKTOP_ID}
-      />
+        <MobileMenuDrawer
+          open={menuOpen}
+          onClose={() => setMenuOpen(false)}
+          showExtras={showMenuExtras}
+          savedCount={savedIds.length}
+          menuId={NAV_MENU_DESKTOP_ID}
+        />
+      </BodyPortal>
 
       <div className="grid h-[100px] w-full grid-cols-[minmax(0,1fr)_auto_minmax(0,1fr)] items-center gap-4 lg:gap-6">
       <div className="flex justify-start">

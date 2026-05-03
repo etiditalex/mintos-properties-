@@ -169,6 +169,28 @@ export type Database = {
         Update: Partial<Database["public"]["Tables"]["testimonials"]["Insert"]>;
         Relationships: [];
       };
+      gallery_images: {
+        Row: {
+          id: string;
+          image_url: string;
+          caption: string | null;
+          published: boolean;
+          display_order: number;
+          created_at: string;
+          updated_at: string;
+        };
+        Insert: {
+          id?: string;
+          image_url: string;
+          caption?: string | null;
+          published?: boolean;
+          display_order?: number;
+          created_at?: string;
+          updated_at?: string;
+        };
+        Update: Partial<Database["public"]["Tables"]["gallery_images"]["Insert"]>;
+        Relationships: [];
+      };
     };
     Views: Record<string, never>;
     Functions: Record<string, never>;
