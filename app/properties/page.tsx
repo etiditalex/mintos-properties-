@@ -14,21 +14,27 @@ export default async function PropertiesPage() {
   return (
     <section>
       <div className="relative left-1/2 w-screen -translate-x-1/2 overflow-hidden border-b border-zinc-200 text-black">
-        <div className="absolute inset-0 bg-[url('https://res.cloudinary.com/dyfnobo9r/image/upload/v1776850166/properties_e0kxhw.jpg')] bg-cover bg-center" />
-        <div className="absolute inset-0 bg-gradient-to-t from-white via-white/85 to-white/40" />
+        <div className="absolute inset-0 bg-[url('https://res.cloudinary.com/dyfnobo9r/image/upload/v1777786000/property_tjvkk1.jpg')] bg-cover bg-center" />
+        <div className="absolute inset-0 bg-gradient-to-t from-white via-white/45 to-white/5" />
 
-        <div className="relative mx-auto flex min-h-[15rem] w-full max-w-[88rem] items-end px-6 pb-10 sm:min-h-[18rem] sm:px-10 sm:pb-12 lg:min-h-[22rem] lg:px-14 lg:pb-14">
+        <div className="relative mx-auto flex min-h-[20rem] w-full max-w-[88rem] items-end px-4 pb-10 sm:min-h-[28rem] sm:px-8 sm:pb-12 md:min-h-[32rem] md:px-10 lg:min-h-[38rem] lg:px-14 lg:pb-16">
           <div className="space-y-4">
-            <h1 className="text-4xl font-semibold text-black sm:text-5xl">Properties</h1>
+            <h1 className="text-3xl font-semibold tracking-tight text-black sm:text-4xl md:text-5xl">
+              Properties
+            </h1>
             <div className="h-[3px] w-12 bg-brand" />
           </div>
         </div>
       </div>
 
-      <div className="mx-auto w-full max-w-7xl px-4 py-16 sm:px-6 lg:px-10">
-        <div className="mb-8 space-y-3">
-          <p className="text-sm uppercase tracking-[0.25em] text-brand">Portfolio</p>
-          <h2 className="text-4xl font-semibold">Available Properties</h2>
+      <div className="mx-auto w-full max-w-7xl px-4 py-12 sm:px-6 sm:py-16 lg:px-10">
+        <div className="mb-8 space-y-2 sm:mb-10 sm:space-y-3">
+          <p className="text-xs uppercase tracking-[0.22em] text-brand sm:text-sm sm:tracking-[0.25em]">
+            Portfolio
+          </p>
+          <h2 className="text-2xl font-semibold tracking-tight text-black sm:text-3xl md:text-4xl">
+            Available Properties
+          </h2>
         </div>
         <PropertiesClient properties={properties} />
       </div>

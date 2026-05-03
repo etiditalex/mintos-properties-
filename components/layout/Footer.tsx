@@ -28,7 +28,7 @@ export function Footer() {
       <div className="mx-auto grid w-full max-w-7xl gap-8 px-4 py-12 sm:grid-cols-2 sm:gap-10 sm:px-6 sm:py-14 lg:grid-cols-4 lg:px-10">
         <div className="space-y-4">
           <BrandLogo height={56} />
-          <h2 className="text-2xl font-semibold text-black sm:text-3xl">About</h2>
+          <h2 className="text-xl font-semibold text-black sm:text-2xl lg:text-3xl">About</h2>
           <p className="max-w-sm text-base leading-7 sm:text-lg sm:leading-9">
             Mintos Properties is a dedicated real estate company serving property
             investors, first-home buyers, land buyers, and individuals seeking
@@ -37,7 +37,7 @@ export function Footer() {
         </div>
 
         <div>
-          <h3 className="mb-3 text-2xl font-semibold text-black sm:mb-4 sm:text-3xl">
+          <h3 className="mb-3 text-xl font-semibold text-black sm:mb-4 sm:text-2xl lg:text-3xl">
             Our Services
           </h3>
           <ul className="space-y-2 text-base sm:space-y-3 sm:text-lg">
@@ -48,7 +48,7 @@ export function Footer() {
         </div>
 
         <div>
-          <h3 className="mb-3 text-2xl font-semibold text-black sm:mb-4 sm:text-3xl">
+          <h3 className="mb-3 text-xl font-semibold text-black sm:mb-4 sm:text-2xl lg:text-3xl">
             Quick Links
           </h3>
           <ul className="space-y-2 text-base sm:space-y-3 sm:text-lg">
@@ -63,7 +63,9 @@ export function Footer() {
         </div>
 
         <div className="space-y-4">
-          <h3 className="text-2xl font-semibold text-black sm:text-3xl">Free Consultation</h3>
+          <h3 className="text-xl font-semibold text-black sm:text-2xl lg:text-3xl">
+            Free Consultation
+          </h3>
           <p className="text-base sm:text-lg">
             <span className="font-semibold text-black">Call Us: </span>
             +254 789 579720

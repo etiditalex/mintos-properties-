@@ -16,7 +16,9 @@ export default function ContactPage() {
           <div className="w-full max-w-3xl">
             <p className="text-base font-semibold text-brand sm:text-lg">Let&apos;s Talk</p>
             <div className="mt-3 h-[2px] w-full max-w-md bg-brand" />
-            <h1 className="mt-8 text-4xl font-semibold leading-none sm:mt-9 sm:text-6xl">Contact</h1>
+            <h1 className="mt-6 text-3xl font-semibold leading-tight tracking-tight sm:mt-9 sm:text-5xl md:text-6xl">
+              Contact
+            </h1>
           </div>
         </div>
       </div>
@@ -24,11 +26,11 @@ export default function ContactPage() {
       <section className="bg-[#f4f4f4] px-4 py-14 sm:px-6 sm:py-16 lg:px-10 lg:py-20">
         <div className="mx-auto grid w-full max-w-7xl gap-10 lg:grid-cols-2 lg:gap-16">
           <div className="max-w-md space-y-5 sm:space-y-6">
-            <h2 className="text-4xl font-semibold leading-none text-zinc-950 sm:text-6xl">
+            <h2 className="text-2xl font-semibold leading-tight tracking-tight text-zinc-950 sm:text-4xl md:text-5xl lg:text-6xl">
               Get In Touch
             </h2>
             <div className="h-[3px] w-14 bg-zinc-900" />
-            <p className="text-lg leading-8 text-zinc-900 sm:text-2xl sm:leading-[2.6rem]">
+            <p className="text-base leading-7 text-zinc-900 sm:text-lg sm:leading-8 md:text-2xl md:leading-[2.6rem]">
               Join us today and discover a new standard of real estate excellence. Let us
               help you grow your property portfolio and achieve success in local and
               international markets.
@@ -37,7 +39,10 @@ export default function ContactPage() {
 
           <form className="space-y-6 sm:space-y-7">
             <div className="space-y-2">
-              <label className="text-2xl font-semibold leading-none text-zinc-800 sm:text-[2rem]" htmlFor="firstName">
+              <label
+                className="text-lg font-semibold leading-snug text-zinc-800 sm:text-xl md:text-2xl"
+                htmlFor="firstName"
+              >
                 Name <span className="text-red-500">*</span>
               </label>
               <div className="grid grid-cols-1 gap-4 sm:grid-cols-2">
@@ -61,7 +66,10 @@ export default function ContactPage() {
             </div>
 
             <div className="space-y-2">
-              <label className="text-2xl font-semibold leading-none text-zinc-800 sm:text-[2rem]" htmlFor="email">
+              <label
+                className="text-lg font-semibold leading-snug text-zinc-800 sm:text-xl md:text-2xl"
+                htmlFor="email"
+              >
                 Email <span className="text-red-500">*</span>
               </label>
               <input
@@ -72,7 +80,10 @@ export default function ContactPage() {
             </div>
 
             <div className="space-y-2">
-              <label className="text-2xl font-semibold leading-none text-zinc-800 sm:text-[2rem]" htmlFor="message">
+              <label
+                className="text-lg font-semibold leading-snug text-zinc-800 sm:text-xl md:text-2xl"
+                htmlFor="message"
+              >
                 Message <span className="text-red-500">*</span>
               </label>
               <textarea
@@ -103,9 +114,11 @@ export default function ContactPage() {
 
           <div className="flex items-center bg-[#faf8f5] p-6 sm:p-10 lg:p-14">
             <div className="max-w-xl text-zinc-900">
-              <h2 className="text-4xl font-semibold leading-none sm:text-6xl">Location</h2>
+              <h2 className="text-2xl font-semibold leading-tight tracking-tight sm:text-4xl md:text-5xl lg:text-6xl">
+                Location
+              </h2>
               <div className="mt-5 h-[2px] w-12 bg-brand" />
-              <p className="mt-6 text-base leading-7 sm:text-2xl sm:leading-10">
+              <p className="mt-6 text-base leading-7 text-zinc-800 sm:text-lg sm:leading-8 md:text-2xl md:leading-10">
                 Join us today and discover a new standard of real estate excellence.
                 Let us help you grow your property portfolio and achieve success in
                 local and international markets.
@@ -162,7 +175,7 @@ export default function ContactPage() {
             <div className="h-[2px] w-full bg-zinc-700/70" />
 
             <article>
-              <h2 className="text-4xl font-semibold leading-none text-zinc-950 sm:text-6xl">
+              <h2 className="text-2xl font-semibold leading-tight tracking-tight text-zinc-950 sm:text-4xl md:text-5xl lg:text-6xl">
                 Vision
               </h2>
               <p className="mt-5 text-lg font-semibold leading-8 text-zinc-900 sm:text-2xl sm:leading-9">

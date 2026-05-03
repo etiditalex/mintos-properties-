@@ -20,7 +20,7 @@ export function PublicNavMobile({ variant = "site", savedCount = 0 }: PublicNavM
   const showExtras = variant === "site";
 
   return (
-    <header className="sticky top-0 z-50 flex w-full items-center justify-between gap-2 border-b border-zinc-200 bg-white px-3 py-2.5 sm:px-4">
+    <header className="sticky top-0 z-50 flex w-full items-center justify-between gap-2 border-b border-zinc-200 bg-white px-3 pb-2.5 pt-[max(0.625rem,env(safe-area-inset-top,0px))] sm:px-4">
       <Link href="/" className="flex min-w-0 shrink items-center py-1">
         <BrandLogo priority={variant === "home"} height={44} />
       </Link>

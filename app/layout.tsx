@@ -1,4 +1,4 @@
-import type { Metadata } from "next";
+import type { Metadata, Viewport } from "next";
 import { Montserrat } from "next/font/google";
 import "./globals.css";
 import { AppProviders } from "@/components/providers/AppProviders";
@@ -21,6 +21,12 @@ export const metadata: Metadata = {
     "Discover premium apartments, villas, and penthouses curated for modern luxury living.",
 };
 
+export const viewport: Viewport = {
+  width: "device-width",
+  initialScale: 1,
+  themeColor: "#ffffff",
+};
+
 export default function RootLayout({
   children,
 }: Readonly<{
@@ -28,11 +34,13 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="en" className={`${montserrat.variable} h-full antialiased`}>
-      <body className="min-h-full bg-white text-black">
+      <body className="min-h-[100dvh] bg-white text-black">
         <AppProviders>
           <div className="flex min-h-screen min-w-0 flex-col">
             <Navbar />
-            <main className="min-w-0 flex-1 pb-24 md:pb-0">{children}</main>
+            <main className="min-w-0 flex-1 pb-[max(6rem,calc(4.75rem+env(safe-area-inset-bottom,0px)))] md:pb-0">
+              {children}
+            </main>
             <Footer />
             <MobileBottomNav />
           </div>

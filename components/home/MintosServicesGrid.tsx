@@ -102,7 +102,18 @@ export function MintosServicesGrid() {
   }, []);
 
   return (
-    <section className="w-full border-y border-zinc-200/80 bg-zinc-300" aria-label="Mintos Real Estate services">
+    <section
+      className="mb-14 w-full border-y border-zinc-200/80 bg-zinc-300 sm:mb-20 lg:mb-24"
+      aria-labelledby="mintos-services-heading"
+    >
+      <div className="border-b border-zinc-200/80 bg-white px-4 py-10 text-center sm:px-6 sm:py-12 lg:px-10 lg:py-14">
+        <h2
+          id="mintos-services-heading"
+          className="text-balance text-xl font-bold uppercase tracking-[0.14em] text-black sm:text-2xl sm:tracking-[0.12em] md:text-3xl"
+        >
+          Mintos Services
+        </h2>
+      </div>
       <div className="grid w-full max-w-none grid-cols-1 gap-px sm:grid-cols-2 lg:grid-cols-4">
         {services.map((item, i) => {
           const dark = isDarkCell(i, cols);

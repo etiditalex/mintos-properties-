@@ -31,7 +31,7 @@ export function MobileBottomNav() {
               key={href}
               href={href}
               className={clsx(
-                "flex min-w-[3.5rem] flex-col items-center gap-1 rounded-xl px-2 py-1 text-[10px] font-medium",
+                "flex min-h-[44px] min-w-[3.5rem] touch-manipulation flex-col items-center justify-center gap-1 rounded-xl px-2 py-1.5 text-[10px] font-medium",
                 active ? "text-brand" : "text-zinc-400",
               )}
             >

@@ -2,6 +2,13 @@
 @tailwind components;
 @tailwind utilities;
 
+@layer base {
+  html {
+    -webkit-text-size-adjust: 100%;
+    text-size-adjust: 100%;
+  }
+}
+
 :root {
   /* Troymintos logo: gold accents, black type, white surfaces */
   --brand: #d4af37;

@@ -70,7 +70,7 @@ export default async function Home() {
 
       <MintosCoastalIntro />
 
-      <section className="w-full max-w-none px-4 py-12 sm:px-6 sm:py-16 lg:px-10 lg:py-20">
+      <section className="mx-auto w-full max-w-7xl px-4 py-12 sm:px-6 sm:py-16 lg:px-10 lg:py-20">
         <FadeIn>
           <div className="mb-6 flex flex-col gap-4 sm:mb-8 sm:flex-row sm:items-end sm:justify-between sm:gap-4">
             <div className="min-w-0">

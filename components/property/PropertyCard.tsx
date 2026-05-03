@@ -22,7 +22,8 @@ export function PropertyCard({ property }: { property: Property }) {
           alt={property.title}
           width={800}
           height={520}
-          className="h-60 w-full object-cover transition-transform duration-300 group-hover:scale-[1.02]"
+          sizes="(max-width: 768px) 100vw, (max-width: 1280px) 50vw, 33vw"
+          className="h-52 w-full object-cover transition-transform duration-300 group-hover:scale-[1.02] sm:h-56 md:h-60"
         />
         <button
           aria-label={saved ? "Remove saved property" : "Save property"}

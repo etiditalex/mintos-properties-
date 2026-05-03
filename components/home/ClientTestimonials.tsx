@@ -154,7 +154,7 @@ export function ClientTestimonials({ items = [] }: Props) {
               ))}
             </div>
 
-            <blockquote className="mt-8 w-full text-center text-base font-normal leading-relaxed tracking-normal text-white sm:text-lg sm:leading-relaxed">
+            <blockquote className="mt-8 w-full text-pretty text-center text-base font-normal leading-relaxed tracking-normal text-white break-words sm:text-lg sm:leading-relaxed">
               &ldquo;{active.quote}&rdquo;
             </blockquote>
 

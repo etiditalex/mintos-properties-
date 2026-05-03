@@ -10,7 +10,7 @@ export function PremierServicesIntro() {
       className="border-t border-zinc-100 bg-white px-4 py-12 sm:px-6 sm:py-16 lg:px-10 lg:py-20"
       aria-labelledby="mintos-real-estate-heading"
     >
-      <div className="w-full max-w-none">
+      <div className="mx-auto w-full max-w-7xl">
         <FadeIn>
           <h2
             id="mintos-real-estate-heading"
