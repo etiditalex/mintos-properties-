@@ -1,6 +1,7 @@
 "use client";
 
 import { FormEvent, useEffect, useState } from "react";
+import Image from "next/image";
 import { Building2, Home, Layers, RefreshCw, Sparkles } from "lucide-react";
 import { createSupabaseBrowserClient } from "@/lib/supabase/client";
 import { landCategoryList, type LandListingTitle } from "@/lib/land";
@@ -15,6 +16,24 @@ import { Database } from "@/types/database";
 type PropertyRow = Database["public"]["Tables"]["properties"]["Row"];
 type PropertyImageRow = Database["public"]["Tables"]["property_images"]["Row"];
 type PropertyWithImagesRow = PropertyRow & { property_images: PropertyImageRow[] | null };
+
+async function withTimeout<T>(
+  promise: Promise<T> | PromiseLike<T>,
+  timeoutMs: number,
+  timeoutMessage: string,
+): Promise<T> {
+  let timeoutHandle: ReturnType<typeof setTimeout> | null = null;
+  const pending = Promise.resolve(promise);
+  const timeoutPromise = new Promise<T>((_, reject) => {
+    timeoutHandle = setTimeout(() => reject(new Error(timeoutMessage)), timeoutMs);
+  });
+
+  try {
+    return await Promise.race([pending, timeoutPromise]);
+  } finally {
+    if (timeoutHandle) clearTimeout(timeoutHandle);
+  }
+}
 
 const residentialPropertyTypes = ["Apartment", "Villa", "Penthouse", "Townhouse"] as const;
 type ResidentialPropertyType = (typeof residentialPropertyTypes)[number];
@@ -327,14 +346,14 @@ export default function AgentPropertiesPage() {
     setLoading(true);
     try {
       const supabase = createSupabaseBrowserClient();
-      const { data, error: queryError } = await withTimeout(
+      const { data, error: queryError } = (await withTimeout(
         supabase
           .from("properties")
           .select("*, property_images(*)")
           .order("created_at", { ascending: false }),
         15000,
         "Loading listings timed out. Click Refresh to try again.",
-      );
+      )) as { data: PropertyWithImagesRow[] | null; error: { message: string } | null };
 
       if (queryError) {
         setError(queryError.message);
@@ -357,19 +376,6 @@ export default function AgentPropertiesPage() {
   useEffect(() => {
     void load();
   }, []);
-
-  const withTimeout = async <T,>(promise: Promise<T>, timeoutMs: number, timeoutMessage: string) => {
-    let timeoutHandle: ReturnType<typeof setTimeout> | null = null;
-    const timeoutPromise = new Promise<T>((_, reject) => {
-      timeoutHandle = setTimeout(() => reject(new Error(timeoutMessage)), timeoutMs);
-    });
-
-    try {
-      return await Promise.race([promise, timeoutPromise]);
-    } finally {
-      if (timeoutHandle) clearTimeout(timeoutHandle);
-    }
-  };
 
   const onImportFrontendListings = async () => {
     setError(null);
@@ -788,11 +794,13 @@ export default function AgentPropertiesPage() {
                       >
                         <td className="px-4 py-3">
                           {getPrimaryImage(property) ? (
-                            <img
+                            <Image
                               src={getPrimaryImage(property) ?? ""}
                               alt={property.title}
+                              width={64}
+                              height={48}
                               className="h-12 w-16 rounded-md object-cover"
-                              loading="lazy"
+                              unoptimized
                             />
                           ) : (
                             <div className="flex h-12 w-16 items-center justify-center rounded-md bg-slate-100 text-[10px] font-medium text-slate-500">

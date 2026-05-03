@@ -1,7 +1,7 @@
 "use client";
 
 import Link from "next/link";
-import { useEffect, useState } from "react";
+import { useLayoutEffect, useState } from "react";
 import type { LucideIcon } from "lucide-react";
 import {
   Banknote,
