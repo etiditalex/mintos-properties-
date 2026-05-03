@@ -12,8 +12,10 @@ const config: Config = {
     extend: {
       colors: {
         brand: "var(--brand)",
+        "brand-muted": "var(--brand-muted)",
         black: "var(--black)",
         cream: "var(--cream)",
+        accent: "var(--accent)",
       },
     },
   },

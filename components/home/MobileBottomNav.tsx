@@ -20,7 +20,7 @@ export function MobileBottomNav() {
 
   return (
     <nav
-      className="fixed bottom-0 left-0 right-0 z-40 border-t border-zinc-200 bg-[#f5f5f4] px-2 pb-[max(0.75rem,env(safe-area-inset-bottom))] pt-2 md:hidden"
+      className="fixed bottom-0 left-0 right-0 z-40 border-t border-zinc-200 bg-white px-2 pb-[max(0.75rem,env(safe-area-inset-bottom))] pt-2 shadow-[0_-4px_20px_rgba(0,0,0,0.06)] md:hidden"
       aria-label="Mobile primary"
     >
       <div className="mx-auto flex max-w-lg items-end justify-around">
@@ -32,7 +32,7 @@ export function MobileBottomNav() {
               href={href}
               className={clsx(
                 "flex min-w-[3.5rem] flex-col items-center gap-1 rounded-xl px-2 py-1 text-[10px] font-medium",
-                active ? "text-black" : "text-zinc-500",
+                active ? "text-brand" : "text-zinc-400",
               )}
             >
               <Icon className="h-5 w-5" strokeWidth={active ? 2.25 : 1.75} />

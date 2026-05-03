@@ -8,13 +8,13 @@ export default async function LandPage() {
 
   return (
     <div className="bg-cream">
-      <section className="bg-brand px-4 py-20 text-white sm:px-6 lg:px-10">
+      <section className="border-b border-zinc-100 bg-white px-4 py-20 text-black sm:px-6 lg:px-10">
         <div className="mx-auto max-w-7xl">
           <p className="text-sm uppercase tracking-[0.25em] text-brand">Land Opportunities</p>
           <h1 className="mt-4 max-w-3xl text-4xl font-semibold leading-tight sm:text-5xl">
             Explore premium land opportunities for development, investment, and future growth.
           </h1>
-          <p className="mt-6 max-w-2xl text-base leading-8 text-white/75">
+          <p className="mt-6 max-w-2xl text-base leading-8 text-zinc-600">
             Browse our land categories to find the right opportunity for agriculture,
             industry, residential communities, or commercial expansion.
           </p>

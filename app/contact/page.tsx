@@ -11,16 +11,11 @@ export const metadata: Metadata = {
 export default function ContactPage() {
   return (
     <section>
-      <div className="relative left-1/2 w-screen -translate-x-1/2 overflow-hidden bg-brand text-white">
-        <div className="absolute inset-0 bg-[linear-gradient(120deg,#123f2e_0%,#1a5a42_52%,#123f2e_100%)]" />
-        <div className="absolute inset-y-0 left-0 w-[65%] bg-[url('https://images.unsplash.com/photo-1486406146926-c627a92ad1ab?auto=format&fit=crop&w=1800&q=80')] bg-cover bg-center opacity-18" />
-        <div className="absolute inset-y-0 left-0 w-[65%] bg-[linear-gradient(180deg,rgba(18,63,46,0.2)_0%,rgba(18,63,46,0.78)_100%)]" />
-        <div className="absolute inset-y-0 left-[65%] w-[35%] bg-[#0e3a2a]" />
-
-        <div className="relative mx-auto flex min-h-[21rem] w-full max-w-[88rem] items-end px-4 pb-8 sm:min-h-[26rem] sm:px-8 sm:pb-10 lg:min-h-[33rem] lg:px-12 lg:pb-14">
+      <div className="relative left-1/2 w-screen -translate-x-1/2 overflow-hidden border-b border-zinc-100 bg-white text-black">
+        <div className="relative mx-auto flex min-h-[18rem] w-full max-w-[88rem] items-end px-4 pb-8 sm:min-h-[22rem] sm:px-8 sm:pb-10 lg:min-h-[26rem] lg:px-12 lg:pb-12">
           <div className="w-full max-w-3xl">
-            <p className="text-base font-semibold text-white/95 sm:text-lg">Let&apos;s Talk</p>
-            <div className="mt-3 h-[2px] w-full bg-[#d8c17a]" />
+            <p className="text-base font-semibold text-brand sm:text-lg">Let&apos;s Talk</p>
+            <div className="mt-3 h-[2px] w-full max-w-md bg-brand" />
             <h1 className="mt-8 text-4xl font-semibold leading-none sm:mt-9 sm:text-6xl">Contact</h1>
           </div>
         </div>
@@ -94,8 +89,8 @@ export default function ContactPage() {
         </div>
       </section>
 
-      <section className="relative left-1/2 w-screen -translate-x-1/2 bg-brand px-4 py-6 sm:px-6 sm:py-8 lg:px-10 lg:py-10">
-        <div className="mx-auto grid w-full max-w-[88rem] overflow-hidden border border-white/20 bg-[#d7e9de] lg:grid-cols-2">
+      <section className="relative left-1/2 w-screen -translate-x-1/2 border-t border-zinc-100 bg-[#faf8f5] px-4 py-6 sm:px-6 sm:py-8 lg:px-10 lg:py-10">
+        <div className="mx-auto grid w-full max-w-[88rem] overflow-hidden border border-zinc-200 bg-white lg:grid-cols-2">
           <div className="min-h-[16rem] sm:min-h-[20rem] lg:min-h-[32rem]">
             <iframe
               title="Mintos Properties office location"
@@ -106,7 +101,7 @@ export default function ContactPage() {
             />
           </div>
 
-          <div className="flex items-center bg-[#d7e9de] p-6 sm:p-10 lg:p-14">
+          <div className="flex items-center bg-[#faf8f5] p-6 sm:p-10 lg:p-14">
             <div className="max-w-xl text-zinc-900">
               <h2 className="text-4xl font-semibold leading-none sm:text-6xl">Location</h2>
               <div className="mt-5 h-[2px] w-12 bg-brand" />

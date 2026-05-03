@@ -8,7 +8,7 @@ import {
   useMemo,
   useState,
 } from "react";
-import { User } from "@supabase/supabase-js";
+import { Session, User } from "@supabase/supabase-js";
 import { createSupabaseBrowserClient } from "@/lib/supabase/client";
 
 interface SavedPropertiesContextValue {
@@ -37,21 +37,8 @@ export function SavedPropertiesProvider({ children }: { children: ReactNode }) {
       return;
     }
 
-    supabase.auth.getUser().then(async ({ data }) => {
+    const loadFromSession = async (session: Session | null) => {
       if (!mounted) return;
-      setUser(data.user ?? null);
-      if (data.user) {
-        const { data: rows } = await supabase!
-          .from("saved_properties")
-          .select("property_id")
-          .eq("user_id", data.user.id);
-        setSavedIds((rows ?? []).map((row) => row.property_id));
-      }
-    });
-
-    const {
-      data: { subscription },
-    } = supabase.auth.onAuthStateChange(async (_event, session) => {
       const currentUser = session?.user ?? null;
       setUser(currentUser);
       if (!currentUser) {
@@ -62,7 +49,14 @@ export function SavedPropertiesProvider({ children }: { children: ReactNode }) {
         .from("saved_properties")
         .select("property_id")
         .eq("user_id", currentUser.id);
+      if (!mounted) return;
       setSavedIds((rows ?? []).map((row) => row.property_id));
+    };
+
+    const {
+      data: { subscription },
+    } = supabase.auth.onAuthStateChange((_event, session) => {
+      void loadFromSession(session);
     });
 
     return () => {

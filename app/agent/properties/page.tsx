@@ -9,6 +9,7 @@ import { AgentPageHeader } from "@/components/admin/AgentPageHeader";
 import { Button } from "@/components/ui/Button";
 import { Input } from "@/components/ui/Input";
 import { Modal } from "@/components/ui/Modal";
+import { formatCurrency } from "@/lib/utils";
 import { Database } from "@/types/database";
 
 type PropertyRow = Database["public"]["Tables"]["properties"]["Row"];
@@ -31,14 +32,10 @@ function isLandType(value: string) {
   return landCategoryList.some((c) => c.title === value);
 }
 
-function formatListingPrice(value: number) {
-  return new Intl.NumberFormat(undefined, { maximumFractionDigits: 0 }).format(value);
-}
-
 function listingStatusClass(status: PropertyRow["status"]) {
   switch (status) {
     case "available":
-      return "bg-blue-50 text-blue-700 ring-1 ring-blue-100";
+      return "bg-brand/10 text-brand ring-1 ring-brand/20";
     case "sold":
       return "bg-slate-100 text-slate-700 ring-1 ring-slate-200";
     case "rented":
@@ -150,7 +147,7 @@ function PropertyEditModal({
             id="edit_listing_category"
             value={listingCategory}
             onChange={(event) => setListingCategory(event.target.value as "property" | "land")}
-            className="h-11 rounded-sm border border-zinc-300 bg-white px-3 text-sm text-black outline-none transition-colors focus:border-blue-400 focus:ring-2 focus:ring-blue-100"
+            className="h-11 rounded-sm border border-zinc-300 bg-white px-3 text-sm text-black outline-none transition-colors focus:border-brand/40 focus:ring-2 focus:ring-brand/20"
           >
             <option value="property">Property</option>
             <option value="land">Land</option>
@@ -171,7 +168,7 @@ function PropertyEditModal({
               id="edit_land_type"
               value={landType}
               onChange={(event) => setLandType(event.target.value as LandListingTitle)}
-              className="h-11 rounded-sm border border-zinc-300 bg-white px-3 text-sm text-black outline-none transition-colors focus:border-blue-400 focus:ring-2 focus:ring-blue-100"
+              className="h-11 rounded-sm border border-zinc-300 bg-white px-3 text-sm text-black outline-none transition-colors focus:border-brand/40 focus:ring-2 focus:ring-brand/20"
             >
               {landCategoryList.map((category) => (
                 <option key={category.slug} value={category.title}>
@@ -189,7 +186,7 @@ function PropertyEditModal({
               onChange={(event) =>
                 setResidentialType(event.target.value as ResidentialPropertyType)
               }
-              className="h-11 rounded-sm border border-zinc-300 bg-white px-3 text-sm text-black outline-none transition-colors focus:border-blue-400 focus:ring-2 focus:ring-blue-100"
+              className="h-11 rounded-sm border border-zinc-300 bg-white px-3 text-sm text-black outline-none transition-colors focus:border-brand/40 focus:ring-2 focus:ring-brand/20"
             >
               {residentialPropertyTypes.map((type) => (
                 <option key={type} value={type}>
@@ -213,7 +210,7 @@ function PropertyEditModal({
             id="edit_status"
             value={status}
             onChange={(event) => setStatus(event.target.value as PropertyRow["status"])}
-            className="h-11 rounded-sm border border-zinc-300 bg-white px-3 text-sm text-black outline-none transition-colors focus:border-blue-400 focus:ring-2 focus:ring-blue-100"
+            className="h-11 rounded-sm border border-zinc-300 bg-white px-3 text-sm text-black outline-none transition-colors focus:border-brand/40 focus:ring-2 focus:ring-brand/20"
           >
             <option value="available">Available</option>
             <option value="sold">Sold</option>
@@ -252,7 +249,7 @@ function PropertyEditModal({
             onChange={(e) => setDescription(e.target.value)}
             required
             rows={4}
-            className="rounded-sm border border-zinc-300 p-3 text-sm outline-none focus:border-blue-400 focus:ring-2 focus:ring-blue-100"
+            className="rounded-sm border border-zinc-300 p-3 text-sm outline-none focus:border-brand/40 focus:ring-2 focus:ring-brand/20"
           />
         </label>
         {localError && <p className="md:col-span-2 text-sm text-red-600">{localError}</p>}
@@ -275,6 +272,7 @@ export default function AgentPropertiesPage() {
   const [message, setMessage] = useState<string | null>(null);
   const [creating, setCreating] = useState(false);
   const [importing, setImporting] = useState(false);
+  const [loading, setLoading] = useState(true);
   const [createImages, setCreateImages] = useState<File[]>([]);
   const [editTarget, setEditTarget] = useState<PropertyRow | null>(null);
   const [listingCategory, setListingCategory] = useState<"property" | "land">("property");
@@ -326,12 +324,17 @@ export default function AgentPropertiesPage() {
   };
 
   const load = async () => {
+    setLoading(true);
     try {
       const supabase = createSupabaseBrowserClient();
-      const { data, error: queryError } = await supabase
-        .from("properties")
-        .select("*, property_images(*)")
-        .order("created_at", { ascending: false });
+      const { data, error: queryError } = await withTimeout(
+        supabase
+          .from("properties")
+          .select("*, property_images(*)")
+          .order("created_at", { ascending: false }),
+        15000,
+        "Loading listings timed out. Click Refresh to try again.",
+      );
 
       if (queryError) {
         setError(queryError.message);
@@ -346,6 +349,8 @@ export default function AgentPropertiesPage() {
       } else {
         setError("Unable to load properties.");
       }
+    } finally {
+      setLoading(false);
     }
   };
 
@@ -403,24 +408,30 @@ export default function AgentPropertiesPage() {
 
     for (let index = 0; index < files.length; index += 1) {
       const file = files[index];
-      const extension = file.name.split(".").pop();
+      const extension = file.name.split(".").pop()?.toLowerCase() || "jpg";
       const path = `${propertyId}/${crypto.randomUUID()}.${extension}`;
 
-      const { error: uploadError } = await supabase.storage
-        .from("property-images")
-        .upload(path, file, { upsert: false });
+      const { error: uploadError } = await withTimeout(
+        supabase.storage.from("property-images").upload(path, file, { upsert: false }),
+        45000,
+        "Image upload timed out. Try again with fewer/smaller images.",
+      );
 
       if (uploadError) {
         throw new Error(uploadError.message);
       }
 
       const { data: publicUrlData } = supabase.storage.from("property-images").getPublicUrl(path);
-      const { error: imageError } = await supabase.from("property_images").insert({
-        property_id: propertyId,
-        image_url: publicUrlData.publicUrl,
-        // For a newly created listing, make the first uploaded image the primary one.
-        is_primary: index === 0,
-      });
+      const { error: imageError } = await withTimeout(
+        supabase.from("property_images").insert({
+          property_id: propertyId,
+          image_url: publicUrlData.publicUrl,
+          // For a newly created listing, make the first uploaded image the primary one.
+          is_primary: index === 0,
+        }),
+        15000,
+        "Saving image metadata timed out. Try again.",
+      );
 
       if (imageError) {
         throw new Error(imageError.message);
@@ -432,11 +443,17 @@ export default function AgentPropertiesPage() {
     event.preventDefault();
     setCreating(true);
     setError(null);
-    const formData = new FormData(event.currentTarget);
+    setMessage(null);
+    const formEl = event.currentTarget;
+    const formData = new FormData(formEl);
 
     try {
       const supabase = createSupabaseBrowserClient();
-      const { data: authData } = await supabase.auth.getUser();
+      const { data: authData } = await withTimeout(
+        supabase.auth.getUser(),
+        15000,
+        "Auth check timed out. Refresh and sign in again.",
+      );
       if (!authData.user) {
         setError("Login as agent to create listings.");
         setCreating(false);
@@ -444,6 +461,11 @@ export default function AgentPropertiesPage() {
       }
 
       const title = String(formData.get("title") ?? "");
+      if (!title.trim()) {
+        setError("Title is required.");
+        setCreating(false);
+        return;
+      }
       const slug = slugify(title);
       const propertyType =
         listingCategory === "land" ? selectedLandType : selectedPropertyType;
@@ -461,11 +483,11 @@ export default function AgentPropertiesPage() {
         agent_id: authData.user.id,
       };
 
-      const { data: insertedProperty, error: insertError } = await supabase
-        .from("properties")
-        .insert(payload)
-        .select("id")
-        .single();
+      const { data: insertedProperty, error: insertError } = await withTimeout(
+        supabase.from("properties").insert(payload).select("id").single(),
+        20000,
+        "Creating the property timed out. Please try again.",
+      );
       if (insertError) {
         setError(insertError.message);
         setCreating(false);
@@ -476,12 +498,13 @@ export default function AgentPropertiesPage() {
         await uploadImagesForProperty(insertedProperty.id, createImages);
       }
 
-      (event.currentTarget as HTMLFormElement).reset();
+      formEl.reset();
       setListingCategory("property");
       setSelectedPropertyType(residentialPropertyTypes[0]);
       setSelectedLandType(landCategoryList[0].title);
       setCreateImages([]);
-      await load();
+      await withTimeout(load(), 15000, "Created successfully, but refresh timed out. Click Refresh.");
+      setMessage("Property created successfully.");
     } catch (createError) {
       if (createError instanceof Error) {
         setError(createError.message);
@@ -568,7 +591,7 @@ export default function AgentPropertiesPage() {
             <button
               type="button"
               onClick={() => void load()}
-              className="inline-flex items-center gap-2 rounded-xl border border-blue-200 bg-blue-50 px-4 py-2 text-sm font-semibold text-blue-700 shadow-sm transition hover:bg-blue-100"
+              className="inline-flex items-center gap-2 rounded-xl border border-brand/30 bg-brand/10 px-4 py-2 text-sm font-semibold text-brand shadow-sm transition hover:bg-brand/15"
             >
               <RefreshCw className="h-4 w-4" />
               Refresh
@@ -583,7 +606,7 @@ export default function AgentPropertiesPage() {
             </button>
             <a
               href="/"
-              className="inline-flex h-10 w-10 items-center justify-center rounded-xl bg-blue-600 text-white shadow-sm transition hover:bg-blue-700"
+              className="inline-flex h-10 w-10 items-center justify-center rounded-xl bg-brand text-white shadow-sm transition hover:bg-brand/90"
               aria-label="Site settings shortcut"
               title="Public site"
             >
@@ -595,7 +618,7 @@ export default function AgentPropertiesPage() {
 
       <div className="grid grid-cols-1 gap-4 sm:grid-cols-3">
         <div className="flex items-center gap-4 rounded-2xl border border-slate-100 bg-white p-5 shadow-sm">
-          <span className="flex h-12 w-12 items-center justify-center rounded-full bg-blue-100 text-blue-600">
+          <span className="flex h-12 w-12 items-center justify-center rounded-full bg-brand/10 text-brand">
             <Layers className="h-6 w-6" />
           </span>
           <div>
@@ -604,7 +627,7 @@ export default function AgentPropertiesPage() {
           </div>
         </div>
         <div className="flex items-center gap-4 rounded-2xl border border-slate-100 bg-white p-5 shadow-sm">
-          <span className="flex h-12 w-12 items-center justify-center rounded-full bg-blue-100 text-blue-600">
+          <span className="flex h-12 w-12 items-center justify-center rounded-full bg-brand/10 text-brand">
             <Building2 className="h-6 w-6" />
           </span>
           <div>
@@ -623,19 +646,10 @@ export default function AgentPropertiesPage() {
         </div>
       </div>
 
-      <div className="rounded-2xl border border-slate-800 bg-slate-900 p-5 text-white shadow-md">
-        <p className="text-[10px] font-bold uppercase tracking-[0.2em] text-blue-300">Information</p>
-        <p className="mt-2 max-w-3xl text-sm leading-relaxed text-slate-300">
-          When the <code className="rounded bg-white/10 px-1">properties</code> table has rows, the
-          public site uses them. If empty, visitors see sample listings until you add data here or run{" "}
-          <code className="rounded bg-white/10 px-1">seed_featured_residential.sql</code> in Supabase.
-        </p>
-      </div>
-
       <div className="grid gap-6 xl:grid-cols-[minmax(0,420px)_minmax(0,1fr)]">
             <div className="rounded-2xl border border-slate-100 bg-white p-6 shadow-sm">
               <div className="mb-6">
-                <p className="text-xs font-semibold uppercase tracking-[0.15em] text-blue-600">New listing</p>
+                <p className="text-xs font-semibold uppercase tracking-[0.15em] text-brand">New listing</p>
                 <h3 className="mt-1 text-xl font-bold text-slate-900">Add property</h3>
               </div>
 
@@ -649,7 +663,7 @@ export default function AgentPropertiesPage() {
                     onChange={(event) =>
                       setListingCategory(event.target.value as "property" | "land")
                     }
-                    className="h-11 rounded-sm border border-zinc-300 bg-white px-3 text-sm text-black outline-none transition-colors focus:border-blue-400 focus:ring-2 focus:ring-blue-100"
+                    className="h-11 rounded-sm border border-zinc-300 bg-white px-3 text-sm text-black outline-none transition-colors focus:border-brand/40 focus:ring-2 focus:ring-brand/20"
                   >
                     <option value="property">Property</option>
                     <option value="land">Land</option>
@@ -667,7 +681,7 @@ export default function AgentPropertiesPage() {
                       onChange={(event) =>
                         setSelectedLandType(event.target.value as LandListingTitle)
                       }
-                      className="h-11 rounded-sm border border-zinc-300 bg-white px-3 text-sm text-black outline-none transition-colors focus:border-blue-400 focus:ring-2 focus:ring-blue-100"
+                      className="h-11 rounded-sm border border-zinc-300 bg-white px-3 text-sm text-black outline-none transition-colors focus:border-brand/40 focus:ring-2 focus:ring-brand/20"
                     >
                       {landCategoryList.map((category) => (
                         <option key={category.slug} value={category.title}>
@@ -686,7 +700,7 @@ export default function AgentPropertiesPage() {
                       onChange={(event) =>
                         setSelectedPropertyType(event.target.value as ResidentialPropertyType)
                       }
-                      className="h-11 rounded-sm border border-zinc-300 bg-white px-3 text-sm text-black outline-none transition-colors focus:border-blue-400 focus:ring-2 focus:ring-blue-100"
+                      className="h-11 rounded-sm border border-zinc-300 bg-white px-3 text-sm text-black outline-none transition-colors focus:border-brand/40 focus:ring-2 focus:ring-brand/20"
                     >
                       {residentialPropertyTypes.map((type) => (
                         <option key={type} value={type}>
@@ -707,7 +721,7 @@ export default function AgentPropertiesPage() {
                     name="description"
                     required
                     rows={4}
-                    className="rounded-sm border border-zinc-300 p-3 text-sm outline-none focus:border-blue-400 focus:ring-2 focus:ring-blue-100"
+                    className="rounded-sm border border-zinc-300 p-3 text-sm outline-none focus:border-brand/40 focus:ring-2 focus:ring-brand/20"
                   />
                 </label>
                 <label className="grid gap-2 text-sm text-zinc-700 md:col-span-2" htmlFor="property_images">
@@ -718,7 +732,7 @@ export default function AgentPropertiesPage() {
                     accept="image/*"
                     multiple
                     onChange={(event) => setCreateImages(Array.from(event.target.files ?? []))}
-                    className="rounded-sm border border-zinc-300 bg-white px-3 py-2 text-sm text-zinc-700 outline-none transition-colors file:mr-3 file:rounded-sm file:border-0 file:bg-blue-50 file:px-3 file:py-2 file:text-xs file:font-semibold file:text-blue-700 hover:file:bg-blue-100 focus:border-blue-400 focus:ring-2 focus:ring-blue-100"
+                    className="rounded-sm border border-zinc-300 bg-white px-3 py-2 text-sm text-zinc-700 outline-none transition-colors file:mr-3 file:rounded-sm file:border-0 file:bg-brand/10 file:px-3 file:py-2 file:text-xs file:font-semibold file:text-brand hover:file:bg-brand/15 focus:border-brand/40 focus:ring-2 focus:ring-brand/20"
                   />
                   {createImages.length > 0 && (
                     <p className="text-xs text-zinc-500">
@@ -729,7 +743,7 @@ export default function AgentPropertiesPage() {
                 <button
                   type="submit"
                   disabled={creating}
-                  className="md:col-span-2 rounded-xl bg-blue-600 px-5 py-3 text-sm font-semibold text-white shadow-sm transition hover:bg-blue-700 disabled:opacity-50"
+                  className="md:col-span-2 rounded-xl bg-brand px-5 py-3 text-sm font-semibold text-white shadow-sm transition hover:bg-brand/90 disabled:opacity-50"
                 >
                   {creating ? "Creating..." : "Add property"}
                 </button>
@@ -744,7 +758,7 @@ export default function AgentPropertiesPage() {
               className="overflow-hidden rounded-2xl border border-slate-100 bg-white shadow-sm"
             >
               <div className="border-b border-slate-100 bg-slate-50/80 px-6 py-4">
-                <p className="text-xs font-semibold uppercase tracking-[0.15em] text-blue-600">
+                <p className="text-xs font-semibold uppercase tracking-[0.15em] text-brand">
                   Inventory
                 </p>
                 <h3 className="mt-1 text-lg font-bold text-slate-900">Current listings</h3>
@@ -792,7 +806,7 @@ export default function AgentPropertiesPage() {
                         <td className="px-4 py-3 text-slate-600">{property.location}</td>
                         <td className="px-4 py-3 text-slate-600">{property.property_type}</td>
                         <td className="px-4 py-3 font-medium text-slate-900">
-                          KSh {formatListingPrice(Number(property.price))}
+                          {formatCurrency(Number(property.price))}
                         </td>
                         <td className="px-4 py-3">
                           <span
@@ -811,7 +825,7 @@ export default function AgentPropertiesPage() {
                             >
                               Preview
                             </a>
-                            <label className="cursor-pointer rounded-lg border border-slate-200 px-2.5 py-1.5 text-xs font-medium text-blue-600 transition hover:border-blue-300 hover:bg-blue-50">
+                            <label className="cursor-pointer rounded-lg border border-slate-200 px-2.5 py-1.5 text-xs font-medium text-brand transition hover:border-brand/40 hover:bg-brand/10">
                               Image
                               <input
                                 className="hidden"
@@ -847,7 +861,9 @@ export default function AgentPropertiesPage() {
 
               {properties.length === 0 && (
                 <div className="border-t border-slate-100 px-6 py-14 text-center text-sm text-slate-500">
-                  No properties yet. Add your first listing using the form.
+                  {loading
+                    ? "Loading listings…"
+                    : "No properties yet. Add your first listing using the form."}
                 </div>
               )}
             </div>

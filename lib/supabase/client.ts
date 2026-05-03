@@ -15,6 +15,11 @@ export function createSupabaseBrowserClient() {
     throw new Error("Supabase env vars are missing");
   }
 
-  browserClient = createBrowserClient<Database>(url, anonKey);
+  browserClient = createBrowserClient<Database>(url, anonKey, {
+    auth: {
+      // In-process lock (no Web Locks API) — avoids steal errors with Strict Mode + parallel auth calls.
+      lock: async (_name, _acquireTimeout, fn) => await fn(),
+    },
+  });
   return browserClient;
 }

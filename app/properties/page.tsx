@@ -13,14 +13,14 @@ export default async function PropertiesPage() {
 
   return (
     <section>
-      <div className="relative left-1/2 w-screen -translate-x-1/2 overflow-hidden border border-zinc-300 text-white">
+      <div className="relative left-1/2 w-screen -translate-x-1/2 overflow-hidden border-b border-zinc-200 text-black">
         <div className="absolute inset-0 bg-[url('https://res.cloudinary.com/dyfnobo9r/image/upload/v1776850166/properties_e0kxhw.jpg')] bg-cover bg-center" />
-        <div className="absolute inset-0 bg-black/50" />
+        <div className="absolute inset-0 bg-gradient-to-t from-white via-white/85 to-white/40" />
 
         <div className="relative mx-auto flex min-h-[15rem] w-full max-w-[88rem] items-end px-6 pb-10 sm:min-h-[18rem] sm:px-10 sm:pb-12 lg:min-h-[22rem] lg:px-14 lg:pb-14">
           <div className="space-y-4">
-            <h1 className="text-4xl font-semibold sm:text-5xl">Properties</h1>
-            <div className="h-[3px] w-12 bg-white/85" />
+            <h1 className="text-4xl font-semibold text-black sm:text-5xl">Properties</h1>
+            <div className="h-[3px] w-12 bg-brand" />
           </div>
         </div>
       </div>

@@ -1,11 +1,24 @@
 -- Seed frontend property listings into Supabase so they appear in admin inventory.
--- Run this once in Supabase SQL Editor.
+-- Run in Supabase SQL Editor after schema.sql (and pgcrypto extension) are applied.
+--
+-- PREREQUISITE (required): at least one row in public.profiles
+--   Profiles are created when someone signs up on your app (e.g. /signup) or when you
+--   add a user under Authentication → Users in the Supabase dashboard. The signup
+--   trigger inserts into public.profiles automatically.
+--   Check:  select id, email, role from public.profiles;
+--   If you have users but no profiles, fix signup triggers first, then rerun.
+-- Optional: run bootstrap_admin.sql (edit emails) to set admin/agent roles before seeding.
+--
 -- Safe to rerun: properties are upserted by slug; images are inserted only if missing.
 
 do $$
 begin
   if not exists (select 1 from public.profiles) then
-    raise exception 'No profiles found. Create at least one user account first, then rerun this seed.';
+    raise exception
+      'No rows in public.profiles. Properties need agent_id → profiles.id. '
+      'Steps: (1) Create a user: use your site signup, OR Authentication → Users → Add user. '
+      '(2) Run: select * from public.profiles; — you should see at least one row. '
+      '(3) Optionally run bootstrap_admin.sql with your email. (4) Run this seed again.';
   end if;
 end
 $$;

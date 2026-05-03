@@ -35,16 +35,18 @@ export function PropertyCard({ property }: { property: Property }) {
           <Heart className={saved ? "fill-brand text-brand" : ""} size={18} />
         </button>
       </div>
-      <div className="space-y-4 p-5">
-        <div className="flex items-center justify-between">
+      <div className="space-y-3.5 p-4 sm:space-y-4 sm:p-5">
+        <div className="flex flex-wrap items-center justify-between gap-2">
           <Badge>{property.type}</Badge>
-          <p className="text-sm font-semibold text-brand">{formatCurrency(property.price)}</p>
+          <p className="shrink-0 text-sm font-semibold tabular-nums text-brand">
+            {formatCurrency(property.price)}
+          </p>
         </div>
-        <div>
-          <h3 className="text-lg font-semibold text-black">{property.title}</h3>
-          <p className="mt-1 text-sm text-zinc-600">{property.location}</p>
+        <div className="min-w-0">
+          <h3 className="text-base font-semibold leading-snug text-black sm:text-lg">{property.title}</h3>
+          <p className="mt-1 break-words text-sm text-zinc-600">{property.location}</p>
         </div>
-        <div className="flex items-center gap-4 text-xs text-zinc-600">
+        <div className="flex flex-wrap items-center gap-x-4 gap-y-1.5 text-xs text-zinc-600">
           <span className="inline-flex items-center gap-1">
             <BedDouble size={14} />
             {property.beds} Beds

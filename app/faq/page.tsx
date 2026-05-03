@@ -75,16 +75,16 @@ export default function FaqPage() {
           className="scale-105 object-cover blur-[1.5px]"
           sizes="100vw"
         />
-        <div className="absolute inset-0 bg-gradient-to-r from-brand/85 via-[#1f6a4c]/80 to-[#2b7a56]/75 backdrop-blur-[1px]" />
+        <div className="absolute inset-0 bg-gradient-to-r from-white/88 via-[#faf8f5]/82 to-white/88 backdrop-blur-[1px]" />
 
         <div className="relative z-10 flex min-h-[250px] items-center justify-center px-4 text-center sm:min-h-[360px] sm:px-6">
-          <h1 className="text-3xl font-semibold tracking-tight text-white sm:text-5xl">
+          <h1 className="text-3xl font-semibold tracking-tight text-black sm:text-5xl">
             Frequently Asked Questions
           </h1>
         </div>
       </section>
 
-      <section className="bg-[#efefef] px-3 py-10 sm:px-6 sm:py-16 lg:px-10">
+      <section className="border-t border-zinc-100 bg-[#faf8f5] px-3 py-10 sm:px-6 sm:py-16 lg:px-10">
         <div className="mx-auto w-full max-w-6xl">
           <div className="text-center">
             <h2 className="text-3xl font-semibold tracking-tight text-[#0f172a] sm:text-5xl">
@@ -100,7 +100,7 @@ export default function FaqPage() {
             <div className="space-y-0 shadow-sm">
               {leftFaqs.map((item, index) => (
                 <article key={item.question}>
-                  <h3 className="bg-[#f5ab45] px-4 py-4 text-lg font-semibold leading-tight text-[#0f172a] sm:px-8 sm:py-6 sm:text-2xl">
+                  <h3 className="bg-brand-muted px-4 py-4 text-lg font-semibold leading-tight text-white sm:px-8 sm:py-6 sm:text-2xl">
                     {item.question}
                   </h3>
                   {item.answer && (

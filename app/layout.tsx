@@ -28,11 +28,11 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="en" className={`${montserrat.variable} h-full antialiased`}>
-      <body className="min-h-full bg-cream text-black">
+      <body className="min-h-full bg-white text-black">
         <AppProviders>
-          <div className="flex min-h-screen flex-col">
+          <div className="flex min-h-screen min-w-0 flex-col">
             <Navbar />
-            <main className="flex-1 pb-24 md:pb-0">{children}</main>
+            <main className="min-w-0 flex-1 pb-24 md:pb-0">{children}</main>
             <Footer />
             <MobileBottomNav />
           </div>

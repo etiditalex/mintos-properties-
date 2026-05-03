@@ -2,7 +2,17 @@
 
 import Link from "next/link";
 import { usePathname } from "next/navigation";
-import { Building2, ExternalLink, Home, LayoutDashboard, MapPin, Settings, Users } from "lucide-react";
+import {
+  BookOpen,
+  Building2,
+  ExternalLink,
+  Home,
+  LayoutDashboard,
+  MapPin,
+  MessageSquareQuote,
+  Settings,
+  Users,
+} from "lucide-react";
 
 import { useProfileRole } from "@/hooks/useProfileRole";
 
@@ -18,6 +28,8 @@ const navItems: NavItem[] = [
   { label: "Users", href: "/agent/users", match: "/agent/users", icon: Users, adminOnly: true },
   { label: "Settings", href: "/agent/settings", match: "/agent/settings", icon: Settings },
   { label: "Properties", href: "/agent/properties", match: "/agent/properties", icon: Building2 },
+  { label: "Blog", href: "/agent/blogs", match: "/agent/blogs", icon: BookOpen },
+  { label: "Testimonials", href: "/agent/testimonials", match: "/agent/testimonials", icon: MessageSquareQuote },
 ];
 
 export function AdminSidebar() {
@@ -30,9 +42,9 @@ export function AdminSidebar() {
     pathname === item.match || (item.match !== "/agent/properties" && pathname.startsWith(item.match));
 
   return (
-    <aside className="sticky top-0 flex h-screen w-64 shrink-0 flex-col border-r border-slate-200 bg-white shadow-sm">
-      <div className="flex h-16 items-center gap-2 border-b border-slate-100 px-5">
-        <span className="flex h-9 w-9 items-center justify-center rounded-xl bg-blue-600 text-white shadow-sm">
+    <aside className="sticky top-0 flex h-screen w-64 shrink-0 flex-col border-r border-zinc-200 bg-white shadow-sm">
+      <div className="flex h-16 items-center gap-2 border-b border-zinc-100 px-5">
+        <span className="flex h-9 w-9 items-center justify-center rounded-xl bg-brand text-white shadow-sm">
           <Home className="h-5 w-5" strokeWidth={2} />
         </span>
         <div>
@@ -53,18 +65,18 @@ export function AdminSidebar() {
               href={item.href}
               className={`relative flex items-center gap-3 rounded-xl px-3 py-2.5 text-sm font-medium transition-colors ${
                 active
-                  ? "bg-gradient-to-r from-blue-50 to-white text-blue-700 shadow-sm"
+                  ? "bg-gradient-to-r from-brand/10 to-white text-brand shadow-sm"
                   : "text-slate-600 hover:bg-slate-50 hover:text-slate-900"
               }`}
             >
               {active && (
                 <span
-                  className="absolute bottom-2 left-0 top-2 w-1 rounded-full bg-blue-600"
+                  className="absolute bottom-2 left-0 top-2 w-1 rounded-full bg-brand"
                   aria-hidden
                 />
               )}
               <Icon
-                className={`h-5 w-5 shrink-0 ${active ? "text-blue-600" : "text-slate-400"}`}
+                className={`h-5 w-5 shrink-0 ${active ? "text-brand" : "text-slate-400"}`}
                 strokeWidth={2}
               />
               {item.label}

@@ -1,24 +1,25 @@
 import Image from "next/image";
 
-/** Coastal Kenya-style land / shoreline (Unsplash). */
-const COASTAL_LAND =
-  "https://images.unsplash.com/photo-1507525428034-b723cf961d3e?auto=format&fit=crop&w=2000&q=80";
+/** Luxury coastal high-rise — Cloudinary. */
+const COASTAL_APARTMENT =
+  "https://res.cloudinary.com/dyfnobo9r/image/upload/v1777712579/apartment_vpzfn3.jpg";
 
 export function MintosCoastalIntro() {
   return (
     <section
-      className="relative z-40 -mt-[80px] w-full bg-brand"
+      className="relative z-40 w-full border-t border-zinc-100 bg-white"
       aria-labelledby="mintos-coastal-heading"
     >
-      {/* Horizontal padding: brand shows at viewport edges; image column has inset so green frames the photo (especially on the left). */}
-      <div className="flex w-full flex-col px-5 sm:px-8 md:min-h-[min(40rem,85vh)] md:flex-row md:items-stretch md:px-10 lg:px-12 xl:px-16">
-        <div className="relative z-10 w-full shrink-0 bg-brand md:w-[42%] md:max-w-none lg:w-[40%]">
-          <div className="p-3 sm:p-4 sm:pl-4 md:p-4 md:pl-7 md:pr-4 md:pt-4 md:pb-5 lg:pl-8 lg:pr-6 lg:py-5 xl:pl-10 xl:pr-7 xl:py-6">
-            <div className="relative -mt-[80px]">
-              <div className="relative aspect-[3/4] min-h-[16rem] w-full overflow-hidden sm:min-h-[18rem] md:aspect-auto md:min-h-[min(70vh,38rem)]">
+      <div
+        className="flex w-full flex-col px-4 pb-8 pt-0 sm:px-6 sm:pb-10 md:min-h-[min(40rem,85vh)] md:flex-row md:items-stretch md:px-0 md:pb-0 md:pl-8 lg:pl-10 xl:pl-12 md:pr-0"
+      >
+        <div className="relative z-10 w-full shrink-0 bg-white md:w-[42%] md:max-w-none lg:w-[40%]">
+          <div className="p-2 sm:p-4 md:p-4 md:pr-4 md:pt-5 md:pb-5 lg:pr-6 lg:py-6">
+            <div className="relative">
+              <div className="relative aspect-[4/5] min-h-[14rem] w-full overflow-hidden sm:aspect-[3/4] sm:min-h-[16rem] md:aspect-auto md:min-h-[min(70vh,38rem)]">
                 <Image
-                  src={COASTAL_LAND}
-                  alt=""
+                  src={COASTAL_APARTMENT}
+                  alt="Aerial view of luxury apartment towers near the coast with pool and ocean"
                   fill
                   className="object-cover object-center"
                   sizes="(min-width: 768px) 42vw, 100vw"
@@ -28,20 +29,19 @@ export function MintosCoastalIntro() {
           </div>
         </div>
 
-        <div className="relative z-20 flex min-h-[20rem] w-full min-w-0 flex-1 flex-col justify-center bg-brand px-6 py-12 text-white shadow-[inset_1px_0_0_rgba(255,255,255,0.12)] backdrop-blur-[2px] sm:px-10 sm:py-14 md:min-h-0 md:px-12 md:py-16 lg:px-16 lg:py-20">
-          <p className="text-[11px] font-bold uppercase leading-relaxed tracking-[0.2em] text-white/90 sm:text-xs">
+        <div
+          className="relative z-20 flex w-full min-w-0 flex-1 flex-col justify-center border-t border-brand/25 bg-white px-4 py-9 text-black sm:px-6 sm:py-12 md:min-h-0 md:border-l md:border-t-0 md:px-0 md:py-16 md:pl-8 md:pr-8 lg:pl-10 lg:py-20 lg:pr-10 xl:pl-12 xl:pr-12 2xl:pr-16"
+        >
+          <p className="text-[11px] font-bold uppercase leading-relaxed tracking-[0.2em] text-brand sm:text-xs">
             Whether you&apos;re buying, selling, or investing.
           </p>
           <h2
             id="mintos-coastal-heading"
-            className="mt-5 text-balance text-2xl font-black uppercase leading-[1.06] tracking-[0.04em] text-white sm:text-3xl lg:text-[2rem] lg:leading-[1.08] xl:text-[2.35rem]"
+            className="mt-4 text-balance text-xl font-black uppercase leading-[1.08] tracking-[0.04em] text-black sm:mt-5 sm:text-2xl sm:leading-[1.06] md:text-3xl lg:text-[2rem] lg:leading-[1.08] xl:text-[2.35rem]"
           >
             Mintos Properties is your trusted coastal Kenya partner.
           </h2>
-          <p className="mt-7 text-base font-bold text-white sm:text-lg">
-            Introducing Mintos Properties Portfolio.
-          </p>
-          <div className="mt-6 max-w-xl space-y-4 text-sm leading-7 text-white/90 sm:text-base sm:leading-8">
+          <div className="mt-6 w-full max-w-none space-y-3.5 text-sm leading-[1.65] text-zinc-600 sm:mt-7 sm:space-y-4 sm:leading-7 md:text-base md:leading-8">
             <p>
               Mintos Properties is rooted in Kenya&apos;s coastal region-Mombasa, Diani, Kilifi, and
               surrounding corridors-where oceanfront land, hospitality-driven growth, and

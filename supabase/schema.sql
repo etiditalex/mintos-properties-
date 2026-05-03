@@ -110,7 +110,7 @@ $$;
 drop trigger if exists on_auth_user_created on auth.users;
 create trigger on_auth_user_created
 after insert on auth.users
-for each row execute function public.handle_new_user();
+for each row execute procedure public.handle_new_user();
 
 -- Storage bucket
 insert into storage.buckets (id, name, public)
@@ -320,3 +320,114 @@ using (
   bucket_id = 'property-images'
   and public.current_user_role() in ('agent', 'admin')
 );
+
+-- Blog posts
+create table if not exists public.blog_posts (
+  id uuid primary key default gen_random_uuid(),
+  title text not null,
+  slug text not null unique,
+  excerpt text,
+  body text not null default '',
+  published boolean not null default false,
+  author_id uuid not null references public.profiles(id) on delete restrict,
+  created_at timestamptz not null default now(),
+  updated_at timestamptz not null default now()
+);
+
+create index if not exists idx_blog_posts_author_id on public.blog_posts(author_id);
+create index if not exists idx_blog_posts_published on public.blog_posts(published);
+
+alter table public.blog_posts enable row level security;
+
+drop policy if exists "blog_posts_select_published" on public.blog_posts;
+create policy "blog_posts_select_published"
+on public.blog_posts
+for select
+to anon, authenticated
+using (published = true);
+
+drop policy if exists "blog_posts_select_own" on public.blog_posts;
+create policy "blog_posts_select_own"
+on public.blog_posts
+for select
+to authenticated
+using (author_id = auth.uid());
+
+drop policy if exists "blog_posts_select_admin" on public.blog_posts;
+create policy "blog_posts_select_admin"
+on public.blog_posts
+for select
+to authenticated
+using (public.current_user_role() = 'admin');
+
+drop policy if exists "blog_posts_insert_staff" on public.blog_posts;
+create policy "blog_posts_insert_staff"
+on public.blog_posts
+for insert
+to authenticated
+with check (
+  author_id = auth.uid()
+  and public.current_user_role() in ('agent', 'admin')
+);
+
+drop policy if exists "blog_posts_update_own" on public.blog_posts;
+create policy "blog_posts_update_own"
+on public.blog_posts
+for update
+to authenticated
+using (author_id = auth.uid())
+with check (author_id = auth.uid());
+
+drop policy if exists "blog_posts_update_admin" on public.blog_posts;
+create policy "blog_posts_update_admin"
+on public.blog_posts
+for update
+to authenticated
+using (public.current_user_role() = 'admin')
+with check (public.current_user_role() = 'admin');
+
+drop policy if exists "blog_posts_delete_own" on public.blog_posts;
+create policy "blog_posts_delete_own"
+on public.blog_posts
+for delete
+to authenticated
+using (author_id = auth.uid());
+
+drop policy if exists "blog_posts_delete_admin" on public.blog_posts;
+create policy "blog_posts_delete_admin"
+on public.blog_posts
+for delete
+to authenticated
+using (public.current_user_role() = 'admin');
+
+-- Testimonials (homepage carousel; managed in /agent/testimonials)
+create table if not exists public.testimonials (
+  id uuid primary key default gen_random_uuid(),
+  quote text not null,
+  author_name text not null,
+  author_image_url text,
+  published boolean not null default false,
+  display_order integer not null default 0,
+  created_at timestamptz not null default now(),
+  updated_at timestamptz not null default now()
+);
+
+create index if not exists idx_testimonials_published on public.testimonials(published);
+create index if not exists idx_testimonials_display_order on public.testimonials(display_order);
+
+alter table public.testimonials enable row level security;
+
+drop policy if exists "testimonials_select_published" on public.testimonials;
+create policy "testimonials_select_published"
+on public.testimonials
+for select
+to anon, authenticated
+using (published = true);
+
+drop policy if exists "testimonials_staff_all" on public.testimonials;
+create policy "testimonials_staff_all"
+on public.testimonials
+for all
+to authenticated
+using (public.current_user_role() in ('agent', 'admin'))
+with check (public.current_user_role() in ('agent', 'admin'));

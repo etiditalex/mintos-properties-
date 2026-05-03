@@ -5,12 +5,13 @@ export const landNavLinks = [
   { href: "/land/commercial", label: "Commercial Land" },
 ] as const;
 
-/** Before Land dropdown — same as home hero */
+/** Primary nav links (before Locations dropdown) */
 export const navLinksBeforeLand = [
   { href: "/", label: "Home" },
   { href: "/services", label: "Services" },
   { href: "/about", label: "About" },
   { href: "/properties", label: "Properties" },
+  { href: "/blog", label: "Blog" },
 ] as const;
 
 export const contactNavLink = { href: "/contact", label: "Contact" } as const;

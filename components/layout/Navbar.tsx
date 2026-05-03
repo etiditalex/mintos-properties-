@@ -15,14 +15,12 @@ export function Navbar() {
   }
 
   return (
-    <header className="sticky top-0 z-40">
+    <header className="sticky top-0 z-40 w-full border-b border-zinc-200 bg-white shadow-sm">
       <div className="md:hidden">
-        <PublicNavMobile variant="home" />
+        <PublicNavMobile variant="site" savedCount={savedIds.length} />
       </div>
-      <div className="hidden border-b border-white/10 bg-[#1a1a1a] px-4 py-3 sm:px-6 lg:px-10 md:block">
-        <div className="mx-auto w-full max-w-7xl">
-          <PublicNavDesktopPill variant="hero" savedCount={savedIds.length} />
-        </div>
+      <div className="mx-auto hidden max-w-7xl px-4 sm:px-6 lg:px-10 md:block">
+        <PublicNavDesktopPill variant="site" savedCount={savedIds.length} />
       </div>
     </header>
   );

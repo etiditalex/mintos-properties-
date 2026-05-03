@@ -1,4 +1,5 @@
 import { Metadata } from "next";
+import Image from "next/image";
 import { BarChart3, BriefcaseBusiness, Building2, CheckCircle2 } from "lucide-react";
 
 export const metadata: Metadata = {
@@ -6,24 +7,35 @@ export const metadata: Metadata = {
   description: "Explore Mintos Properties services for buyers, sellers, and investors.",
 };
 
+const SERVICES_HERO_IMAGE =
+  "https://res.cloudinary.com/dyfnobo9r/image/upload/v1777710595/services_page_hzklec.jpg";
+
 export default function ServicesPage() {
   return (
     <section>
-      <div className="relative left-1/2 w-screen -translate-x-1/2 overflow-hidden bg-brand text-white">
-        <div className="absolute inset-0 bg-[linear-gradient(120deg,#123f2e_0%,#1a5a42_52%,#123f2e_100%)]" />
-        <div className="absolute inset-y-0 left-0 w-full bg-[url('https://images.unsplash.com/photo-1560518883-ce09059eeffa?auto=format&fit=crop&w=2000&q=80')] bg-cover bg-center opacity-20 lg:w-[70%]" />
-        <div className="absolute inset-y-0 left-0 w-full bg-[linear-gradient(180deg,rgba(18,63,46,0.2)_0%,rgba(18,63,46,0.8)_100%)] lg:w-[70%]" />
-
-        <div className="relative mx-auto flex min-h-[15rem] w-full max-w-[88rem] items-end px-4 pb-6 sm:min-h-[20rem] sm:px-8 sm:pb-12 lg:min-h-[26rem] lg:px-12 lg:pb-14">
+      <div className="relative w-full overflow-hidden border-b border-zinc-200 text-black">
+        <div className="absolute inset-0">
+          <Image
+            src={SERVICES_HERO_IMAGE}
+            alt=""
+            fill
+            priority
+            className="object-cover object-center"
+            sizes="100vw"
+          />
+        </div>
+        <div className="absolute inset-0 bg-gradient-to-r from-white/92 via-white/78 to-white/45" />
+        <div className="absolute inset-0 bg-gradient-to-t from-white via-white/50 to-transparent" />
+        <div className="relative mx-auto flex min-h-[18rem] w-full max-w-7xl items-end px-4 pb-8 sm:min-h-[22rem] sm:px-6 sm:pb-12 lg:min-h-[28rem] lg:px-10 lg:pb-14">
           <div className="w-full max-w-3xl">
-            <p className="text-base font-semibold text-white/95 sm:text-lg">What We Offer</p>
-            <div className="mt-3 h-[2px] w-full bg-[#d8c17a]" />
+            <p className="text-base font-semibold text-brand sm:text-lg">What We Offer</p>
+            <div className="mt-3 h-[2px] w-full max-w-md bg-brand" />
             <h1 className="mt-6 text-3xl font-semibold leading-none sm:mt-8 sm:text-6xl">Services</h1>
           </div>
         </div>
       </div>
 
-      <section className="bg-[#d7e9de] px-4 py-12 sm:px-6 sm:py-16 lg:px-10 lg:py-20">
+      <section className="bg-[#faf8f5] px-4 py-12 sm:px-6 sm:py-16 lg:px-10 lg:py-20">
         <div className="mx-auto grid w-full max-w-7xl gap-10 lg:grid-cols-2 lg:gap-16">
           <div className="max-w-2xl">
             <p className="text-sm font-semibold text-zinc-900">How We Can Help</p>
@@ -41,7 +53,7 @@ export default function ServicesPage() {
 
           <div className="space-y-7 sm:space-y-8">
             <article className="flex items-start gap-4">
-              <CheckCircle2 className="mt-1 h-6 w-6 shrink-0 text-zinc-900 sm:h-7 sm:w-7" />
+              <CheckCircle2 className="mt-1 h-6 w-6 shrink-0 text-brand sm:h-7 sm:w-7" />
               <div>
                 <h3 className="text-lg font-semibold text-zinc-950 sm:text-xl lg:text-2xl">
                   Evaluating large and diverse portfolios
@@ -59,7 +71,7 @@ export default function ServicesPage() {
             </article>
 
             <article className="flex items-start gap-4">
-              <CheckCircle2 className="mt-1 h-6 w-6 shrink-0 text-zinc-900 sm:h-7 sm:w-7" />
+              <CheckCircle2 className="mt-1 h-6 w-6 shrink-0 text-brand sm:h-7 sm:w-7" />
               <div>
                 <h3 className="text-lg font-semibold text-zinc-950 sm:text-xl lg:text-2xl">
                   Performing single-property analysis
@@ -81,10 +93,10 @@ export default function ServicesPage() {
       <section className="bg-[#f4f4f4] px-4 py-12 sm:px-6 sm:py-16 lg:px-10 lg:py-20">
         <div className="mx-auto grid w-full max-w-7xl gap-8 md:grid-cols-2 md:gap-10">
           <article className="space-y-4">
-            <span className="inline-flex h-12 w-12 items-center justify-center rounded-full border border-zinc-800 text-zinc-900 sm:h-14 sm:w-14">
+            <span className="inline-flex h-12 w-12 items-center justify-center rounded-full border border-brand/35 bg-white text-brand sm:h-14 sm:w-14">
               <Building2 className="h-5 w-5 sm:h-6 sm:w-6" />
             </span>
-            <h2 className="text-3xl font-semibold leading-tight text-brand sm:text-4xl lg:text-5xl">
+            <h2 className="text-3xl font-semibold leading-tight text-black sm:text-4xl lg:text-5xl">
               Real Estate
               <br />
               Due Diligence
@@ -94,14 +106,14 @@ export default function ServicesPage() {
               diligence, covering every detail from legal checks to property
               inspections and risk analysis.
             </p>
-            <div className="h-[2px] w-full bg-zinc-800/80" />
+            <div className="h-[2px] w-full bg-brand/40" />
           </article>
 
           <article className="space-y-4">
-            <span className="inline-flex h-12 w-12 items-center justify-center rounded-full border border-zinc-800 text-zinc-900 sm:h-14 sm:w-14">
+            <span className="inline-flex h-12 w-12 items-center justify-center rounded-full border border-brand/35 bg-white text-brand sm:h-14 sm:w-14">
               <BriefcaseBusiness className="h-5 w-5 sm:h-6 sm:w-6" />
             </span>
-            <h2 className="text-3xl font-semibold leading-tight text-brand sm:text-4xl lg:text-5xl">
+            <h2 className="text-3xl font-semibold leading-tight text-black sm:text-4xl lg:text-5xl">
               Portfolio
               <br />
               Services
@@ -111,14 +123,14 @@ export default function ServicesPage() {
               portfolio services designed to maximize returns and minimize risk.
               Let&apos;s build your next stage of growth.
             </p>
-            <div className="h-[2px] w-full bg-zinc-800/80" />
+            <div className="h-[2px] w-full bg-brand/40" />
           </article>
 
           <article className="space-y-4">
-            <span className="inline-flex h-12 w-12 items-center justify-center rounded-full border border-zinc-800 text-zinc-900 sm:h-14 sm:w-14">
+            <span className="inline-flex h-12 w-12 items-center justify-center rounded-full border border-brand/35 bg-white text-brand sm:h-14 sm:w-14">
               <BarChart3 className="h-5 w-5 sm:h-6 sm:w-6" />
             </span>
-            <h2 className="text-3xl font-semibold leading-tight text-brand sm:text-4xl lg:text-5xl">
+            <h2 className="text-3xl font-semibold leading-tight text-black sm:text-4xl lg:text-5xl">
               Real Estate
               <br />
               Market Studies
@@ -128,7 +140,7 @@ export default function ServicesPage() {
               demand trends, development activity, and neighborhood dynamics to
               support confident investment decisions.
             </p>
-            <div className="h-[2px] w-full bg-zinc-800/80" />
+            <div className="h-[2px] w-full bg-brand/40" />
           </article>
         </div>
       </section>
