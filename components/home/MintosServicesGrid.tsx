@@ -78,16 +78,17 @@ function isDarkCell(index: number, cols: number) {
 }
 
 function gridColumnCount(): 1 | 2 | 4 {
-  if (typeof window === "undefined") return 4;
+  if (typeof window === "undefined") return 1;
   if (window.matchMedia("(min-width: 1024px)").matches) return 4;
   if (window.matchMedia("(min-width: 640px)").matches) return 2;
   return 1;
 }
 
 export function MintosServicesGrid() {
-  const [cols, setCols] = useState<1 | 2 | 4>(4);
+  /** Match Tailwind mobile-first grid (`grid-cols-1 sm:2 lg:4`) so SSR + first paint avoid wrong checkerboard. */
+  const [cols, setCols] = useState<1 | 2 | 4>(1);
 
-  useEffect(() => {
+  useLayoutEffect(() => {
     const update = () => setCols(gridColumnCount());
     update();
     const mqSm = window.matchMedia("(min-width: 640px)");

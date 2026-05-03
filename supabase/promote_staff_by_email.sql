@@ -13,18 +13,18 @@ left join public.profiles p on p.id = u.id
 order by u.created_at desc;
 
 -- 2) PROMOTE: set admin using Auth email (fixes typos in profiles.email if auth is correct)
--- Replace the email below with the one you use to sign in (Google OAuth uses that email).
+-- Replace your-email@example.com below with the address you use to sign in (Google OAuth uses that email).
 update public.profiles p
 set role = 'admin'::public.app_role
 from auth.users u
 where u.id = p.id
-  and lower(trim(u.email)) = lower(trim('changerfusions@gmail.com'));
+  and lower(trim(u.email)) = lower(trim('your-email@example.com'));
 
 -- 3) VERIFY
 select u.email, p.role
 from auth.users u
 join public.profiles p on p.id = u.id
-where lower(trim(u.email)) = lower(trim('changerfusions@gmail.com'));
+where lower(trim(u.email)) = lower(trim('your-email@example.com'));
 
 -- 4) IF STEP 2 updated 0 rows: profile row missing — create/link from Auth (then set admin)
 insert into public.profiles (id, full_name, email, role)
@@ -34,5 +34,5 @@ select
   u.email,
   'admin'::public.app_role
 from auth.users u
-where lower(trim(u.email)) = lower(trim('changerfusions@gmail.com'))
+where lower(trim(u.email)) = lower(trim('your-email@example.com'))
 on conflict (id) do update set role = excluded.role;
