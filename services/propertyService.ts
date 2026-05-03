@@ -2,7 +2,7 @@ import { createSupabaseServerClient } from "@/lib/supabase/server";
 import { isLandType, LandCategoryKey, matchesLandCategory } from "@/lib/land";
 import { properties as mockProperties } from "@/lib/properties";
 import { Database } from "@/types/database";
-import { Property } from "@/types/property";
+import { ListingMode, Property } from "@/types/property";
 
 type PropertyRow = Database["public"]["Tables"]["properties"]["Row"];
 type PropertyImageRow = Database["public"]["Tables"]["property_images"]["Row"];
@@ -14,6 +14,9 @@ function mapProperty(
 ): Property {
   const ordered = [...images].sort((a, b) => Number(b.is_primary) - Number(a.is_primary));
   const cover = ordered[0]?.image_url ?? "";
+  const listingMode: ListingMode =
+    row.listing_mode === "rent" ? "rent" : "sale";
+  const tags = row.feature_tags?.filter(Boolean) ?? [];
   return {
     id: row.id,
     title: row.title,
@@ -31,6 +34,19 @@ function mapProperty(
     gallery: ordered.map((item) => item.image_url),
     status: row.status,
     agentId: row.agent_id,
+    listingMode,
+    featureTags: tags,
+  };
+}
+
+function enrichDemoProperty(property: Property): Property {
+  return {
+    ...property,
+    listingMode: property.listingMode ?? "sale",
+    featureTags:
+      property.featureTags?.length ?
+        property.featureTags
+      : property.features.map((f) => f.trim().toLowerCase()),
   };
 }
 
@@ -47,7 +63,7 @@ export async function getAllProperties(): Promise<Property[]> {
 
   const rows = data as PropertyWithImages[];
   // Connected DB but no rows yet: public pages would look empty; keep demo listings until you seed or create rows in /agent/properties.
-  if (rows.length === 0) return mockProperties;
+  if (rows.length === 0) return mockProperties.map(enrichDemoProperty);
 
   return rows.map((row) =>
     mapProperty(

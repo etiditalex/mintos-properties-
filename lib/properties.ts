@@ -1,3 +1,4 @@
+import { applyPropertyFilters } from "@/lib/applyPropertyFilters";
 import { Property, PropertyFilterState } from "@/types/property";
 
 export const properties: Property[] = [
@@ -145,7 +146,13 @@ export const defaultFilters: PropertyFilterState = {
   location: "All",
   type: "All",
   minPrice: 0,
-  maxPrice: 500000,
+  maxPrice: 50_000_000,
+  listingIntent: "buy",
+  searchMode: "properties",
+  bedMin: 0,
+  bathMin: 0,
+  selectedTypes: [],
+  selectedFeatures: [],
 };
 
 export const uniqueLocations = [
@@ -165,16 +172,5 @@ export function filterProperties(
   collection: Property[],
   filters: PropertyFilterState,
 ): Property[] {
-  return collection.filter((property) => {
-    const matchesSearch =
-      property.title.toLowerCase().includes(filters.search.toLowerCase()) ||
-      property.location.toLowerCase().includes(filters.search.toLowerCase());
-    const matchesLocation =
-      filters.location === "All" || property.location === filters.location;
-    const matchesType = filters.type === "All" || property.type === filters.type;
-    const matchesPrice =
-      property.price >= filters.minPrice && property.price <= filters.maxPrice;
-
-    return matchesSearch && matchesLocation && matchesType && matchesPrice;
-  });
+  return applyPropertyFilters(collection, filters);
 }

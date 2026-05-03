@@ -17,7 +17,7 @@ export function PropertyFilters({
   onChange,
 }: PropertyFiltersProps) {
   return (
-    <section className="grid gap-4 rounded-sm border border-zinc-200 bg-white p-5 md:grid-cols-4">
+    <section className="grid gap-4 rounded-sm border border-zinc-200 bg-white p-5 md:grid-cols-2 lg:grid-cols-5">
       <Input
         id="search"
         label="Search"
@@ -55,6 +55,20 @@ export function PropertyFilters({
           ))}
         </select>
       </label>
+      <Input
+        id="min-price"
+        label="Min Price (KES)"
+        min={0}
+        step={5000}
+        type="number"
+        value={filters.minPrice}
+        onChange={(event) =>
+          onChange({
+            ...filters,
+            minPrice: Number(event.target.value || 0),
+          })
+        }
+      />
       <Input
         id="max-price"
         label="Max Price (KES)"

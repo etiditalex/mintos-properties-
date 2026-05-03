@@ -1,85 +1,132 @@
 "use client";
 
 import Link from "next/link";
-import { ChevronDown, Menu } from "lucide-react";
+import { usePathname } from "next/navigation";
+import { useEffect, useState } from "react";
+import { LogIn, Menu, Search } from "lucide-react";
+import clsx from "clsx";
 
-import { AuthButtons } from "@/components/auth/AuthButtons";
 import { BrandLogo } from "@/components/layout/BrandLogo";
-import { locationNavLinks } from "@/lib/locations";
-import { navLinksBeforeLand } from "@/lib/navConfig";
+import { FindHomeSearchDrawer } from "@/components/layout/FindHomeSearchDrawer";
+import { MobileMenuDrawer } from "@/components/layout/MobileMenuDrawer";
+import { useProfileRole } from "@/hooks/useProfileRole";
+import { useSavedProperties } from "@/hooks/useSavedProperties";
+
+const NAV_MENU_MOBILE_ID = "nav-menu-mobile";
 
 type PublicNavMobileProps = {
-  /** Saved count + auth in menu (site-wide pages). Home omits these. */
   variant?: "home" | "site";
-  savedCount?: number;
 };
 
-const rowHover = "px-4 py-3 text-zinc-800 hover:bg-zinc-50";
+/** Three-zone header (menu · logo · actions). Home uses glass bar over hero; site uses white bar. */
+export function PublicNavMobile({ variant = "site" }: PublicNavMobileProps) {
+  const [menuOpen, setMenuOpen] = useState(false);
+  const [findHomeOpen, setFindHomeOpen] = useState(false);
+  const pathname = usePathname() ?? "";
+  const { savedIds } = useSavedProperties();
+  const showMenuExtras = !pathname.startsWith("/agent");
+  const isHome = variant === "home";
+  const { user, ready, isStaff, authUnavailable } = useProfileRole();
 
-export function PublicNavMobile({ variant = "site", savedCount = 0 }: PublicNavMobileProps) {
-  const showExtras = variant === "site";
+  useEffect(() => {
+    setMenuOpen(false);
+    setFindHomeOpen(false);
+  }, [pathname]);
+
+  const shell = isHome
+    ? "absolute inset-x-0 top-0 z-30 border-b border-white/20 bg-black/35 text-white backdrop-blur-md"
+    : "sticky top-0 z-50 border-b border-zinc-200 bg-white text-zinc-900";
+
+  const menuBtn = isHome
+    ? "flex items-center gap-2 rounded-lg px-1 py-2 text-[10px] font-semibold uppercase tracking-[0.2em] text-white hover:text-brand sm:text-[11px]"
+    : "flex items-center gap-2 rounded-lg px-1 py-2 text-[10px] font-semibold uppercase tracking-[0.2em] text-zinc-900 hover:text-brand sm:text-[11px]";
+
+  const actionClass = isHome
+    ? "text-[10px] font-semibold uppercase tracking-[0.16em] text-white transition-colors hover:text-brand sm:text-[11px]"
+    : "text-[10px] font-semibold uppercase tracking-[0.16em] text-zinc-900 transition-colors hover:text-brand sm:text-[11px]";
+
+  const iconClass = isHome ? "shrink-0 text-white" : "shrink-0 text-zinc-900";
 
   return (
-    <header className="sticky top-0 z-50 flex w-full items-center justify-between gap-2 border-b border-zinc-200 bg-white px-3 pb-2.5 pt-[max(0.625rem,env(safe-area-inset-top,0px))] sm:px-4">
-      <Link href="/" className="flex min-w-0 shrink items-center py-1">
-        <BrandLogo priority={variant === "home"} height={44} />
-      </Link>
-      <div className="flex shrink-0 items-center gap-2 sm:gap-3">
-        <Link
-          href="/contact"
-          className="inline-flex items-center justify-center rounded-sm bg-brand px-3 py-2 text-xs font-semibold text-white shadow-sm transition hover:bg-brand/90 sm:px-4 sm:text-sm"
+    <>
+      <FindHomeSearchDrawer open={findHomeOpen} onClose={() => setFindHomeOpen(false)} />
+
+      <MobileMenuDrawer
+        open={menuOpen}
+        onClose={() => setMenuOpen(false)}
+        showExtras={showMenuExtras}
+        savedCount={savedIds.length}
+        menuId={NAV_MENU_MOBILE_ID}
+      />
+
+      <header
+        className={clsx(
+          "w-full pt-[env(safe-area-inset-top,0px)]",
+          shell,
+        )}
+      >
+        <div
+          className={clsx(
+            "mx-auto grid w-full max-w-[100vw] grid-cols-[minmax(0,1fr)_auto_minmax(0,1fr)] items-center gap-1.5 px-3 sm:gap-2 sm:px-4",
+            "min-h-[100px]",
+          )}
         >
-          Contact Us
-        </Link>
-        <details className="relative z-[60]">
-        <summary className="flex h-11 w-11 cursor-pointer list-none items-center justify-center text-zinc-900 [&::-webkit-details-marker]:hidden">
-          <span className="sr-only">Open menu</span>
-          <Menu className="h-6 w-6" strokeWidth={2} />
-        </summary>
-        <div className="absolute right-0 top-[calc(100%+0.5rem)] z-50 w-[min(18rem,calc(100vw-2rem))] rounded-2xl border border-zinc-200 bg-white py-2 text-zinc-800 shadow-xl">
-          <nav className="flex flex-col gap-0.5 text-sm font-medium" aria-label="Mobile menu">
-            {navLinksBeforeLand.map((link) => (
-              <Link key={link.href} href={link.href} className={rowHover}>
-                {link.label}
+          <div className="flex min-w-0 items-center justify-start">
+            <button
+              type="button"
+              className={menuBtn}
+              aria-expanded={menuOpen}
+              aria-controls={NAV_MENU_MOBILE_ID}
+              onClick={() => setMenuOpen(true)}
+            >
+              <Menu className="h-5 w-5 sm:h-6 sm:w-6" strokeWidth={2} aria-hidden />
+              <span>Menu</span>
+            </button>
+          </div>
+
+          <Link href="/" className="flex min-w-0 justify-center py-1" aria-label="Mintos Properties home">
+            <BrandLogo
+              priority={isHome}
+              height={52}
+              className={isHome ? "drop-shadow-md" : undefined}
+            />
+          </Link>
+
+          <div className="flex min-w-0 items-center justify-end gap-1.5 sm:gap-2.5 md:gap-3">
+            <button
+              type="button"
+              className={clsx("inline-flex min-h-10 min-w-10 items-center justify-center", actionClass)}
+              aria-label="Open search"
+              onClick={() => setFindHomeOpen(true)}
+            >
+              <Search className={clsx("h-5 w-5", iconClass)} strokeWidth={2} aria-hidden />
+            </button>
+            <button
+              type="button"
+              className={clsx("hidden min-h-10 items-center sm:inline-flex", actionClass)}
+              onClick={() => setFindHomeOpen(true)}
+            >
+              Find your home
+            </button>
+            {authUnavailable || !ready ? null : user ? (
+              <Link
+                href={isStaff ? "/agent/properties" : "/saved"}
+                className={clsx("inline-flex min-h-10 max-w-[7rem] items-center truncate sm:max-w-none", actionClass)}
+              >
+                Account
               </Link>
-            ))}
-            <details className="border-t border-zinc-100 [&[open]_summary_svg]:rotate-180">
-              <summary className="flex cursor-pointer list-none items-center justify-between px-4 py-3 hover:bg-zinc-50 [&::-webkit-details-marker]:hidden">
-                Locations
-                <ChevronDown size={16} className="shrink-0 transition-transform duration-200" />
-              </summary>
-              <div className="flex max-h-[50vh] flex-col gap-1 overflow-y-auto border-t border-zinc-100 px-4 pb-3 pt-1">
-                <Link
-                  href="/locations"
-                  className="rounded-lg py-2 text-sm font-medium text-zinc-800 hover:text-brand"
-                >
-                  All locations
-                </Link>
-                {locationNavLinks.map((link) => (
-                  <Link
-                    key={link.href}
-                    href={link.href}
-                    className="rounded-lg py-2 text-sm text-zinc-700 hover:text-brand"
-                  >
-                    {link.label}
-                  </Link>
-                ))}
-              </div>
-            </details>
-            {showExtras && (
-              <>
-                <Link href="/saved" className="border-t border-zinc-100 px-4 py-3 hover:bg-zinc-50">
-                  Saved ({savedCount})
-                </Link>
-                <div className="border-t border-zinc-100 px-4 py-3">
-                  <AuthButtons />
-                </div>
-              </>
+            ) : (
+              <Link
+                href="/login"
+                className={clsx("inline-flex min-h-10 items-center gap-1", actionClass)}
+              >
+                <LogIn className={clsx("h-4 w-4", iconClass)} strokeWidth={2} aria-hidden />
+                <span className="hidden min-[360px]:inline">Sign in</span>
+              </Link>
             )}
-          </nav>
+          </div>
         </div>
-      </details>
-      </div>
-    </header>
+      </header>
+    </>
   );
 }

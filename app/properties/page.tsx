@@ -1,6 +1,11 @@
 import { Metadata } from "next";
 
 import { PropertiesClient } from "./PropertiesClient";
+import {
+  parsePropertyFiltersFromSearchParams,
+  recordToURLSearchParams,
+  serializePropertyFilters,
+} from "@/lib/propertySearchParams";
 import { getAllProperties } from "@/services/propertyService";
 
 export const metadata: Metadata = {
@@ -8,8 +13,16 @@ export const metadata: Metadata = {
   description: "Browse curated premium homes and investment-ready residences.",
 };
 
-export default async function PropertiesPage() {
+export default async function PropertiesPage({
+  searchParams,
+}: {
+  searchParams: Record<string, string | string[] | undefined>;
+}) {
   const properties = await getAllProperties();
+  const initialFilters = parsePropertyFiltersFromSearchParams(
+    recordToURLSearchParams(searchParams),
+  );
+  const filterKey = serializePropertyFilters(initialFilters);
 
   return (
     <section>
@@ -36,7 +49,7 @@ export default async function PropertiesPage() {
             Available Properties
           </h2>
         </div>
-        <PropertiesClient properties={properties} />
+        <PropertiesClient key={filterKey} properties={properties} initialFilters={initialFilters} />
       </div>
     </section>
   );

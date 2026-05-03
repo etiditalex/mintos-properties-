@@ -97,6 +97,12 @@ function PropertyEditModal({
   );
   const [saving, setSaving] = useState(false);
   const [localError, setLocalError] = useState<string | null>(null);
+  const [listingMode, setListingMode] = useState<"sale" | "rent">(
+    property.listing_mode === "rent" ? "rent" : "sale",
+  );
+  const [featureTagsLine, setFeatureTagsLine] = useState(
+    (property.feature_tags ?? []).join(", "),
+  );
 
   const propertyTypeValue =
     listingCategory === "land" ? landType : residentialType;
@@ -122,6 +128,10 @@ function PropertyEditModal({
     }
 
     try {
+      const feature_tags = featureTagsLine
+        .split(",")
+        .map((t) => t.trim())
+        .filter(Boolean);
       const supabase = createSupabaseBrowserClient();
       const { error: updateError } = await supabase
         .from("properties")
@@ -136,6 +146,8 @@ function PropertyEditModal({
           size: sizeNum,
           property_type: propertyTypeValue,
           status,
+          listing_mode: listingMode,
+          feature_tags,
         })
         .eq("id", property.id);
 
@@ -223,6 +235,18 @@ function PropertyEditModal({
           onChange={(e) => setPrice(e.target.value)}
           required
         />
+        <label className="grid gap-2 text-sm text-zinc-700" htmlFor="edit_listing_mode">
+          <span className="font-medium">Listing mode</span>
+          <select
+            id="edit_listing_mode"
+            value={listingMode}
+            onChange={(event) => setListingMode(event.target.value as "sale" | "rent")}
+            className="h-11 rounded-sm border border-zinc-300 bg-white px-3 text-sm text-black outline-none transition-colors focus:border-brand/40 focus:ring-2 focus:ring-brand/20"
+          >
+            <option value="sale">For sale</option>
+            <option value="rent">For rent</option>
+          </select>
+        </label>
         <label className="grid gap-2 text-sm text-zinc-700" htmlFor="edit_status">
           <span className="font-medium">Status</span>
           <select
@@ -260,6 +284,20 @@ function PropertyEditModal({
           onChange={(e) => setSize(e.target.value)}
           required
         />
+        <label className="grid gap-2 text-sm text-zinc-700 md:col-span-2" htmlFor="edit_feature_tags">
+          <span className="font-medium">Feature tags (comma-separated)</span>
+          <input
+            id="edit_feature_tags"
+            type="text"
+            value={featureTagsLine}
+            onChange={(e) => setFeatureTagsLine(e.target.value)}
+            placeholder="Pool, Parking, Gym"
+            className="h-11 rounded-sm border border-zinc-300 px-3 text-sm outline-none focus:border-brand/40 focus:ring-2 focus:ring-brand/20"
+          />
+          <span className="text-xs font-normal text-zinc-500">
+            Used by the public search drawer — same keywords power filters on /properties.
+          </span>
+        </label>
         <label className="grid gap-2 text-sm text-zinc-700 md:col-span-2" htmlFor="edit_description">
           <span className="font-medium">Description</span>
           <textarea
@@ -475,6 +513,13 @@ export default function AgentPropertiesPage() {
       const slug = slugify(title);
       const propertyType =
         listingCategory === "land" ? selectedLandType : selectedPropertyType;
+      const tagsRaw = String(formData.get("feature_tags") ?? "");
+      const feature_tags = tagsRaw
+        .split(",")
+        .map((t) => t.trim())
+        .filter(Boolean);
+      const listing_mode =
+        String(formData.get("listing_mode") ?? "sale") === "rent" ? "rent" : "sale";
       const payload = {
         title,
         slug,
@@ -486,6 +531,8 @@ export default function AgentPropertiesPage() {
         bathrooms: Number(formData.get("bathrooms") ?? 0),
         size: Number(formData.get("size") ?? 0),
         status: "available" as const,
+        listing_mode,
+        feature_tags,
         agent_id: authData.user.id,
       };
 
@@ -717,6 +764,31 @@ export default function AgentPropertiesPage() {
                   </label>
                 )}
                 <Input id="price" name="price" type="number" label="Price" required />
+                <label className="grid gap-2 text-sm text-zinc-700" htmlFor="listing_mode">
+                  <span className="font-medium">Listing mode</span>
+                  <select
+                    id="listing_mode"
+                    name="listing_mode"
+                    defaultValue="sale"
+                    className="h-11 rounded-sm border border-zinc-300 bg-white px-3 text-sm text-black outline-none transition-colors focus:border-brand/40 focus:ring-2 focus:ring-brand/20"
+                  >
+                    <option value="sale">For sale</option>
+                    <option value="rent">For rent</option>
+                  </select>
+                </label>
+                <label className="grid gap-2 text-sm text-zinc-700 md:col-span-2 xl:col-span-1" htmlFor="feature_tags">
+                  <span className="font-medium">Feature tags</span>
+                  <input
+                    id="feature_tags"
+                    name="feature_tags"
+                    type="text"
+                    placeholder="Pool, Parking, Sea view (comma-separated)"
+                    className="h-11 rounded-sm border border-zinc-300 px-3 text-sm outline-none focus:border-brand/40 focus:ring-2 focus:ring-brand/20"
+                  />
+                  <span className="text-xs font-normal text-zinc-500">
+                    Powers public search filters when buyers use Find your home.
+                  </span>
+                </label>
                 <Input id="bedrooms" name="bedrooms" type="number" label="Bedrooms" required />
                 <Input id="bathrooms" name="bathrooms" type="number" label="Bathrooms" required />
                 <Input id="size" name="size" type="number" label="Size (sqft)" required />

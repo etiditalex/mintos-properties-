@@ -6,12 +6,21 @@ import { PropertyCard } from "@/components/property/PropertyCard";
 import { PropertyFilters } from "@/components/property/PropertyFilters";
 import { Button } from "@/components/ui/Button";
 import { defaultFilters, filterProperties } from "@/lib/properties";
-import { Property } from "@/types/property";
+import type { Property, PropertyFilterState } from "@/types/property";
 
 const PAGE_SIZE = 4;
 
-export function PropertiesClient({ properties }: { properties: Property[] }) {
-  const [filters, setFilters] = useState(defaultFilters);
+export function PropertiesClient({
+  properties,
+  initialFilters,
+}: {
+  properties: Property[];
+  initialFilters?: PropertyFilterState;
+}) {
+  const [filters, setFilters] = useState<PropertyFilterState>(() => ({
+    ...defaultFilters,
+    ...initialFilters,
+  }));
   const [page, setPage] = useState(1);
   const uniqueLocations = ["All", ...new Set(properties.map((property) => property.location))];
   const uniquePropertyTypes = ["All", ...new Set(properties.map((property) => property.type))];

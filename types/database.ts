@@ -42,6 +42,8 @@ export type Database = {
           bathrooms: number;
           size: number;
           status: "available" | "sold" | "rented";
+          listing_mode?: string | null;
+          feature_tags?: string[] | null;
           agent_id: string;
           created_at: string;
         };
@@ -57,6 +59,8 @@ export type Database = {
           bathrooms?: number;
           size: number;
           status?: "available" | "sold" | "rented";
+          listing_mode?: string;
+          feature_tags?: string[];
           agent_id: string;
           created_at?: string;
         };

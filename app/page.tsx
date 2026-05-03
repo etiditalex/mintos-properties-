@@ -1,6 +1,7 @@
 import Link from "next/link";
 import Image from "next/image";
 
+import { HomeHeroMessaging } from "@/components/home/HomeHeroMessaging";
 import { ClientTestimonials } from "@/components/home/ClientTestimonials";
 import { FutureRealEstateCta } from "@/components/home/FutureRealEstateCta";
 import { MintosCoastalIntro } from "@/components/home/MintosCoastalIntro";
@@ -27,9 +28,7 @@ export default async function Home() {
   return (
     <div className="min-w-0 overflow-x-hidden">
       <section className="relative md:hidden">
-        <PublicNavMobile variant="home" />
-
-        <div className="relative isolate min-h-[100svh] w-full">
+        <div className="relative isolate flex min-h-[100svh] w-full flex-col">
           <Image
             src={HERO_IMAGE}
             alt="Luxury apartment buildings at dusk"
@@ -38,7 +37,19 @@ export default async function Home() {
             className="object-cover object-center"
             sizes="100vw"
           />
-          <div className="absolute inset-0 bg-gradient-to-b from-black/45 via-black/30 to-black/50" />
+          {/* Light blur + darkening for readable type (image unchanged) */}
+          <div
+            className="absolute inset-0 z-[1] backdrop-blur-[2px] sm:backdrop-blur-[3px]"
+            aria-hidden
+          />
+          <div
+            className="absolute inset-0 z-[2] bg-gradient-to-b from-black/32 via-black/20 to-black/38"
+            aria-hidden
+          />
+          <PublicNavMobile variant="home" />
+          <div className="relative z-10 flex flex-1 flex-col items-center justify-center px-4 pb-28 pt-[max(7rem,calc(env(safe-area-inset-top,0px)+100px))] sm:px-6 lg:px-10">
+            <HomeHeroMessaging />
+          </div>
         </div>
       </section>
 
@@ -52,8 +63,18 @@ export default async function Home() {
           className="object-cover object-center"
           sizes="100vw"
         />
-        <div className="absolute inset-0 bg-gradient-to-r from-black/50 via-black/25 to-black/10" />
-        <div className="absolute inset-0 bg-gradient-to-t from-black/45 via-transparent to-black/10" />
+        <div
+          className="absolute inset-0 z-[1] backdrop-blur-[2px] md:backdrop-blur-[3px]"
+          aria-hidden
+        />
+        <div
+          className="absolute inset-0 z-[2] bg-gradient-to-r from-black/34 via-black/18 to-black/12"
+          aria-hidden
+        />
+        <div
+          className="absolute inset-0 z-[2] bg-gradient-to-t from-black/36 via-black/14 to-black/10"
+          aria-hidden
+        />
 
         <div className="relative z-10 flex min-h-[100vh] w-full flex-col">
           <header className="w-full border-b border-zinc-200/60 bg-white/95 shadow-sm backdrop-blur-md">
@@ -61,6 +82,9 @@ export default async function Home() {
               <PublicNavDesktopPill variant="hero" />
             </div>
           </header>
+          <div className="flex w-full flex-1 flex-col items-center justify-center px-4 pb-16 pt-8 sm:px-6 lg:px-10 md:pb-20">
+            <HomeHeroMessaging />
+          </div>
         </div>
       </section>
 

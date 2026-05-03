@@ -7,32 +7,55 @@ export const metadata: Metadata = {
 };
 
 const TONY_MINTOS_PORTRAIT =
-  "https://res.cloudinary.com/dyfnobo9r/image/upload/v1776763528/mandela_2_xvktej.jpg";
+  "https://res.cloudinary.com/dyfnobo9r/image/upload/v1777822391/Troy_mintos_cvi5ol.jpg";
+
+/** Interior hero — Cloudinary (about_us_2). */
+const ABOUT_HERO_BG =
+  "https://res.cloudinary.com/dyfnobo9r/image/upload/v1777820818/about_us_2_agwewt.jpg";
 
 export default function AboutPage() {
   return (
     <section className="space-y-16 pb-8">
       <div className="relative">
-        <div className="relative w-full overflow-hidden border-b border-zinc-100 bg-gradient-to-b from-white to-[#faf8f5] pb-10 text-black sm:pb-14 lg:pb-36">
-          <div className="relative mx-auto flex min-h-[28rem] w-full max-w-7xl items-end px-4 pt-12 sm:min-h-[30rem] sm:px-6 sm:pt-16 lg:min-h-[34rem] lg:px-10 lg:pt-20">
-            <div className="relative z-20 mx-auto max-w-2xl px-2 pb-6 text-center sm:pb-10">
-              <p className="text-xs font-semibold uppercase tracking-[0.24em] text-brand sm:text-sm">
-                Aiming To Be The Best
-              </p>
-              <h1 className="mt-4 text-4xl font-semibold leading-tight text-black sm:text-5xl lg:text-6xl">
-                Making Better
-                <br />
-                Real Estate
-                <br />
-                Decisions
-              </h1>
-              <div className="mx-auto mt-6 h-[2px] w-14 bg-brand" />
-              <p className="mx-auto mt-6 max-w-xl text-base font-semibold text-zinc-800 sm:text-xl lg:text-2xl">
-                Introducing Mintos Properties Portfolio.
-              </p>
-              <p className="mx-auto mt-4 max-w-xl text-sm leading-7 text-zinc-600 sm:text-base">
-                We guide buyers, sellers, and investors across Mombasa, Diani, Kilifi, and nearby growth corridors with trusted local insight.
-              </p>
+        <div className="relative w-full overflow-hidden border-b border-zinc-200">
+          <div className="relative left-1/2 isolate min-h-[28rem] w-screen max-w-none -translate-x-1/2 sm:min-h-[30rem] lg:min-h-[34rem]">
+            <Image
+              src={ABOUT_HERO_BG}
+              alt="Bright open-plan living and dining interior"
+              fill
+              priority
+              className="object-cover object-center"
+              sizes="100vw"
+            />
+            <div
+              className="absolute inset-0 z-[1] backdrop-blur-[3px] sm:backdrop-blur-[4px]"
+              aria-hidden
+            />
+            <div
+              className="absolute inset-0 z-[2] bg-gradient-to-b from-black/45 via-black/30 to-black/55"
+              aria-hidden
+            />
+            <div className="relative z-10 mx-auto flex min-h-[28rem] w-full max-w-7xl items-end px-4 pb-10 pt-12 sm:min-h-[30rem] sm:px-6 sm:pb-14 sm:pt-16 lg:min-h-[34rem] lg:px-10 lg:pb-36 lg:pt-20">
+              <div className="relative z-20 mx-auto max-w-2xl px-2 pb-6 text-center sm:pb-10">
+                <p className="text-xs font-semibold uppercase tracking-[0.24em] text-brand sm:text-sm">
+                  Aiming To Be The Best
+                </p>
+                <h1 className="mt-4 text-4xl font-semibold leading-tight text-white [text-shadow:0_2px_24px_rgba(0,0,0,0.55)] sm:text-5xl lg:text-6xl">
+                  Making Better
+                  <br />
+                  Real Estate
+                  <br />
+                  Decisions
+                </h1>
+                <div className="mx-auto mt-6 h-[2px] w-14 bg-brand" />
+                <p className="mx-auto mt-6 max-w-xl text-base font-semibold text-white/95 sm:text-xl lg:text-2xl">
+                  Introducing Mintos Properties Portfolio.
+                </p>
+                <p className="mx-auto mt-4 max-w-xl text-sm leading-7 text-zinc-200 sm:text-base">
+                  We guide buyers, sellers, and investors across Mombasa, Diani, Kilifi, and nearby
+                  growth corridors with trusted local insight.
+                </p>
+              </div>
             </div>
           </div>
         </div>
@@ -129,9 +152,9 @@ export default function AboutPage() {
           <div className="relative min-h-[18rem] sm:min-h-[22rem] lg:min-h-full">
             <Image
               src={TONY_MINTOS_PORTRAIT}
-              alt="Tony Mintos standing in office"
+              alt="Tony Mintos, Real Estate Consultant, sitting in a professional lounge setting"
               fill
-              className="object-cover object-top"
+              className="object-cover object-center"
               sizes="(min-width: 1024px) 40vw, 100vw"
             />
           </div>
