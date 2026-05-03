@@ -58,7 +58,8 @@ function TestimonialEditModal({
     return () => URL.revokeObjectURL(url);
   }, [photoFile]);
 
-  const previewSrc = filePreviewUrl ?? imageUrl.trim() || row.author_image_url || null;
+  const previewSrc =
+    filePreviewUrl ?? (imageUrl.trim() || row.author_image_url || null);
 
   const onSubmit = async (event: FormEvent<HTMLFormElement>) => {
     event.preventDefault();
