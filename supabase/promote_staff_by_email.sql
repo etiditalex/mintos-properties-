@@ -13,7 +13,7 @@ left join public.profiles p on p.id = u.id
 order by u.created_at desc;
 
 -- 2) PROMOTE: set admin using Auth email (fixes typos in profiles.email if auth is correct)
--- Replace your-email@example.com below with the address you use to sign in (Google OAuth uses that email).
+-- Replace the email below with the one you use to sign in (Google OAuth uses that email).
 update public.profiles p
 set role = 'admin'::public.app_role
 from auth.users u

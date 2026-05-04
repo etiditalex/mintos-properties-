@@ -18,7 +18,7 @@ import { getPublishedTestimonials } from "@/services/testimonialService";
 
 /** Home hero — Cloudinary (hero2_gcsuva). */
 const HERO_IMAGE =
-  "https://res.cloudinary.com/dyfnobo9r/image/upload/v1777867121/hero2_gcsuva.jpg";
+  "https://res.cloudinary.com/dyfnobo9r/image/upload/v1777885366/hero3_t1rcb0.jpg";
 
 export default async function Home() {
   const allProperties = await getAllProperties();
@@ -43,7 +43,7 @@ export default async function Home() {
             aria-hidden
           />
           <div
-            className="absolute inset-0 z-[2] bg-gradient-to-b from-black/36 via-black/22 to-black/42"
+            className="absolute inset-0 z-[2] bg-gradient-to-b from-black/45 via-black/38 to-black/52"
             aria-hidden
           />
           <PublicNavMobile variant="home" />
@@ -68,11 +68,11 @@ export default async function Home() {
           aria-hidden
         />
         <div
-          className="absolute inset-0 z-[2] bg-gradient-to-r from-black/38 via-black/20 to-black/14"
+          className="absolute inset-0 z-[2] bg-gradient-to-r from-black/52 via-black/38 to-black/30"
           aria-hidden
         />
         <div
-          className="absolute inset-0 z-[2] bg-gradient-to-t from-black/40 via-black/18 to-black/12"
+          className="absolute inset-0 z-[2] bg-gradient-to-t from-black/52 via-black/32 to-black/22"
           aria-hidden
         />
 

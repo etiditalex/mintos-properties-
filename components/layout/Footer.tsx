@@ -25,9 +25,13 @@ export function Footer() {
 
   return (
     <footer className="border-t border-zinc-200 bg-white text-zinc-600">
-      <div className="mx-auto grid w-full max-w-7xl gap-8 px-4 py-12 sm:grid-cols-2 sm:gap-10 sm:px-6 sm:py-14 lg:grid-cols-4 lg:px-10">
-        <div className="space-y-4">
+      <div className="mx-auto w-full max-w-7xl px-4 py-12 sm:px-6 sm:py-14 lg:px-10">
+        <div className="pb-8">
           <BrandLogo height={56} />
+        </div>
+
+        <div className="grid w-full gap-8 sm:grid-cols-2 sm:gap-10 lg:grid-cols-4">
+        <div className="space-y-4">
           <h2 className="text-xl font-semibold text-black sm:text-2xl lg:text-3xl">About</h2>
           <p className="max-w-sm text-base leading-7 sm:text-lg sm:leading-9">
             Mintos Properties is a dedicated real estate company serving property
@@ -89,6 +93,7 @@ export function Footer() {
               </Link>
             ))}
           </div>
+        </div>
         </div>
       </div>
       <div className="border-t border-zinc-100 py-4 text-center text-xs text-zinc-500">
