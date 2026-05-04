@@ -105,7 +105,7 @@ export default function ContactPage() {
           <div className="min-h-[16rem] sm:min-h-[20rem] lg:min-h-[32rem]">
             <iframe
               title="Mintos Properties office location"
-              src="https://www.google.com/maps?q=Bofa+Road+Kilifi&output=embed"
+              src="https://www.google.com/maps?q=Naival+Mall+Mwembe+Mombasa&output=embed"
               className="h-full w-full"
               loading="lazy"
               referrerPolicy="no-referrer-when-downgrade"
@@ -126,7 +126,7 @@ export default function ContactPage() {
               <ul className="mt-8 space-y-3 text-sm sm:space-y-4 sm:text-xl">
                 <li className="flex items-start gap-3">
                   <Phone className="mt-1 h-5 w-5 text-brand" />
-                  <span>+254 700 000 000</span>
+                  <span>07215005807</span>
                 </li>
                 <li className="flex items-start gap-3">
                   <Mail className="mt-1 h-5 w-5 text-brand" />
@@ -134,7 +134,7 @@ export default function ContactPage() {
                 </li>
                 <li className="flex items-start gap-3">
                   <MapPin className="mt-1 h-5 w-5 text-brand" />
-                  <span>Kilifi, Bofa Road</span>
+                  <span>Naival Mall Mwembe Mombasa</span>
                 </li>
               </ul>
             </div>

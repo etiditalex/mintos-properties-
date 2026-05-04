@@ -72,9 +72,9 @@ export function Footer() {
           </h3>
           <p className="text-base sm:text-lg">
             <span className="font-semibold text-black">Call Us: </span>
-            +254 789 579720
+            07215005807
           </p>
-          <p className="text-base leading-7 sm:text-lg sm:leading-8">Kilifi, Bofa Road</p>
+          <p className="text-base leading-7 sm:text-lg sm:leading-8">Naival Mall Mwembe Mombasa</p>
           <div className="flex flex-wrap gap-2 pt-2">
             {[
               { href: "#", icon: Facebook, label: "Facebook" },
