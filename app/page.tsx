@@ -16,9 +16,9 @@ import { FadeIn } from "@/components/ui/FadeIn";
 import { getAllProperties } from "@/services/propertyService";
 import { getPublishedTestimonials } from "@/services/testimonialService";
 
-/** Home hero — Cloudinary (hero_nvkdim). */
+/** Home hero — Cloudinary (hero2_gcsuva). */
 const HERO_IMAGE =
-  "https://res.cloudinary.com/dyfnobo9r/image/upload/v1777866001/hero_nvkdim.jpg";
+  "https://res.cloudinary.com/dyfnobo9r/image/upload/v1777867121/hero2_gcsuva.jpg";
 
 export default async function Home() {
   const allProperties = await getAllProperties();
@@ -31,19 +31,19 @@ export default async function Home() {
         <div className="relative isolate flex min-h-[100svh] w-full flex-col">
           <Image
             src={HERO_IMAGE}
-            alt="Modern high-rise residential building viewed from below against a blue sky"
+            alt="High-rise apartment buildings in a ring, low angle view toward an overcast sky"
             fill
             priority
             className="object-cover object-center"
             sizes="100vw"
           />
-          {/* Light blur + darkening for readable type (image unchanged) */}
+          {/* Minimal blur + darkening for depth and readable type */}
           <div
-            className="absolute inset-0 z-[1] backdrop-blur-[2px] sm:backdrop-blur-[3px]"
+            className="absolute inset-0 z-[1] backdrop-blur-[0.5px] sm:backdrop-blur-[1px]"
             aria-hidden
           />
           <div
-            className="absolute inset-0 z-[2] bg-gradient-to-b from-black/32 via-black/20 to-black/38"
+            className="absolute inset-0 z-[2] bg-gradient-to-b from-black/36 via-black/22 to-black/42"
             aria-hidden
           />
           <PublicNavMobile variant="home" />
@@ -57,22 +57,22 @@ export default async function Home() {
       <section className="relative z-0 hidden min-h-[100vh] w-full overflow-hidden md:block">
         <Image
           src={HERO_IMAGE}
-          alt="Modern high-rise residential building viewed from below against a blue sky"
+          alt="High-rise apartment buildings in a ring, low angle view toward an overcast sky"
           fill
           priority
           className="object-cover object-center"
           sizes="100vw"
         />
         <div
-          className="absolute inset-0 z-[1] backdrop-blur-[2px] md:backdrop-blur-[3px]"
+          className="absolute inset-0 z-[1] backdrop-blur-[0.5px] md:backdrop-blur-[1px]"
           aria-hidden
         />
         <div
-          className="absolute inset-0 z-[2] bg-gradient-to-r from-black/34 via-black/18 to-black/12"
+          className="absolute inset-0 z-[2] bg-gradient-to-r from-black/38 via-black/20 to-black/14"
           aria-hidden
         />
         <div
-          className="absolute inset-0 z-[2] bg-gradient-to-t from-black/36 via-black/14 to-black/10"
+          className="absolute inset-0 z-[2] bg-gradient-to-t from-black/40 via-black/18 to-black/12"
           aria-hidden
         />
 

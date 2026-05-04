@@ -1,22 +1,15 @@
 import Link from "next/link";
 import { ArrowRight } from "lucide-react";
 
-const heroTextShadow =
-  "[text-shadow:0_1px_2px_rgba(0,0,0,0.95),0_2px_16px_rgba(0,0,0,0.75),0_0_1px_rgba(0,0,0,1)]";
-
 /** Centered headline, full-width supporting copy, and CTA for the home hero (image provided by parent). */
 export function HomeHeroMessaging() {
   return (
     <div className="w-full max-w-7xl text-center">
-      <h1
-        className={`text-balance text-3xl font-bold leading-[1.12] tracking-tight sm:text-4xl md:text-5xl lg:text-6xl lg:leading-[1.08] ${heroTextShadow}`}
-      >
+      <h1 className="text-balance text-3xl font-bold leading-[1.12] tracking-tight sm:text-4xl md:text-5xl lg:text-6xl lg:leading-[1.08]">
         <span className="text-white">KENYA&apos;S GATE to </span>
-        <span className="text-brand drop-shadow-[0_2px_8px_rgba(0,0,0,0.85)]">Real Estate</span>
+        <span className="text-brand">Real Estate</span>
       </h1>
-      <p
-        className={`mt-5 w-full max-w-none text-pretty text-sm font-medium leading-relaxed text-white sm:mt-6 sm:text-base sm:leading-relaxed md:text-lg md:leading-[1.65] lg:text-xl lg:leading-relaxed ${heroTextShadow}`}
-      >
+      <p className="mt-5 w-full max-w-none text-pretty text-sm font-normal leading-relaxed text-white sm:mt-6 sm:text-base sm:leading-relaxed md:text-lg md:leading-[1.65] lg:text-xl lg:leading-relaxed">
         We connect global investors and Kenyan buyers to the country&apos;s property market through
         trust, innovation, and dedicated partnerships—curating luxury homes, prime land, and
         income-ready assets from Nairobi to the coast, with clarity and long-term value at every
