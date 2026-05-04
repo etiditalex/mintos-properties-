@@ -101,7 +101,7 @@ export function ClientTestimonials({ items = [] }: Props) {
   if (!active) return null;
 
   return (
-    <section className="relative isolate w-full overflow-hidden py-16 sm:py-20 lg:py-24">
+    <section className="relative isolate w-full overflow-hidden py-14 sm:py-20 lg:py-24">
       <div className="absolute inset-0">
         <Image
           src={TESTIMONIAL_BG}
@@ -125,7 +125,7 @@ export function ClientTestimonials({ items = [] }: Props) {
           Client testimonials
         </h2>
 
-        <div className="relative mt-10 sm:mt-12">
+        <div className="relative mt-8 sm:mt-12">
           <button
             type="button"
             onClick={goPrev}
@@ -148,13 +148,13 @@ export function ClientTestimonials({ items = [] }: Props) {
               {Array.from({ length: 5 }).map((_, i) => (
                 <Star
                   key={`star-${i}`}
-                  className="h-6 w-6 fill-brand text-brand sm:h-7 sm:w-7"
+                  className="h-5 w-5 fill-brand text-brand sm:h-7 sm:w-7"
                   aria-hidden
                 />
               ))}
             </div>
 
-            <blockquote className="mt-8 w-full text-pretty text-center text-base font-normal leading-relaxed tracking-normal text-white break-words sm:text-lg sm:leading-relaxed">
+            <blockquote className="mt-7 w-full text-pretty text-center text-base font-normal leading-relaxed tracking-normal text-white break-words sm:mt-8 sm:text-lg sm:leading-relaxed">
               &ldquo;{active.quote}&rdquo;
             </blockquote>
 

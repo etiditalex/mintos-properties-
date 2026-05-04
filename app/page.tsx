@@ -28,7 +28,7 @@ export default async function Home() {
   return (
     <div className="min-w-0 overflow-x-hidden">
       <section className="relative md:hidden">
-        <div className="relative isolate flex min-h-[100svh] w-full flex-col">
+        <div className="relative isolate flex min-h-[92svh] w-full flex-col sm:min-h-[100svh]">
           <Image
             src={HERO_IMAGE}
             alt="High-rise apartment buildings in a ring, low angle view toward an overcast sky"
@@ -47,7 +47,7 @@ export default async function Home() {
             aria-hidden
           />
           <PublicNavMobile variant="home" />
-          <div className="relative z-10 flex flex-1 flex-col items-center justify-center px-4 pb-28 pt-[max(7rem,calc(env(safe-area-inset-top,0px)+100px))] sm:px-6 lg:px-10">
+          <div className="relative z-10 flex flex-1 flex-col items-center justify-center px-4 pb-24 pt-[max(6.5rem,calc(env(safe-area-inset-top,0px)+92px))] sm:px-6 sm:pb-28 lg:px-10">
             <HomeHeroMessaging />
           </div>
         </div>
@@ -94,7 +94,7 @@ export default async function Home() {
 
       <MintosCoastalIntro />
 
-      <section className="mx-auto w-full max-w-7xl px-4 py-12 sm:px-6 sm:py-16 lg:px-10 lg:py-20">
+      <section className="mx-auto w-full max-w-7xl px-4 py-10 sm:px-6 sm:py-16 lg:px-10 lg:py-20">
         <FadeIn>
           <div className="mb-6 flex flex-col gap-4 sm:mb-8 sm:flex-row sm:items-end sm:justify-between sm:gap-4">
             <div className="min-w-0">
@@ -126,7 +126,7 @@ export default async function Home() {
 
       <FutureRealEstateCta />
 
-      <section className="border-t border-zinc-100 bg-[#faf8f5] px-4 py-12 sm:px-6 sm:py-16 lg:px-10">
+      <section className="border-t border-zinc-100 bg-[#faf8f5] px-4 py-10 sm:px-6 sm:py-16 lg:px-10">
         <div className="mx-auto flex w-full max-w-7xl flex-col gap-6 sm:flex-row sm:flex-wrap sm:items-center sm:justify-between">
           <div className="min-w-0">
             <p className="text-xs uppercase tracking-[0.22em] text-brand sm:text-sm sm:tracking-[0.25em]">

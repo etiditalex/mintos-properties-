@@ -123,16 +123,16 @@ export function MintosServicesGrid() {
               key={item.title}
               className={
                 dark
-                  ? "flex min-h-[17.5rem] flex-col items-center bg-black px-4 py-8 text-center text-white sm:min-h-[20rem] sm:px-6 sm:py-10 md:min-h-[22rem] md:px-8 md:py-12"
-                  : "flex min-h-[17.5rem] flex-col items-center bg-white px-4 py-8 text-center text-black sm:min-h-[20rem] sm:px-6 sm:py-10 md:min-h-[22rem] md:px-8 md:py-12"
+                  ? "flex min-h-[15rem] flex-col items-center bg-black px-4 py-7 text-center text-white sm:min-h-[20rem] sm:px-6 sm:py-10 md:min-h-[22rem] md:px-8 md:py-12"
+                  : "flex min-h-[15rem] flex-col items-center bg-white px-4 py-7 text-center text-black sm:min-h-[20rem] sm:px-6 sm:py-10 md:min-h-[22rem] md:px-8 md:py-12"
               }
             >
               <Icon
-                className={`h-10 w-10 shrink-0 sm:h-11 sm:w-11 ${dark ? "text-white" : "text-brand"}`}
+                className={`h-9 w-9 shrink-0 sm:h-11 sm:w-11 ${dark ? "text-white" : "text-brand"}`}
                 strokeWidth={1.25}
                 aria-hidden
               />
-              <h3 className="mt-5 text-pretty text-base font-bold leading-snug sm:mt-6 sm:text-lg md:text-xl">
+              <h3 className="mt-4 text-pretty text-base font-bold leading-snug sm:mt-6 sm:text-lg md:text-xl">
                 {item.title}
               </h3>
               <p
@@ -144,7 +144,7 @@ export function MintosServicesGrid() {
               </p>
               <Link
                 href="/services"
-                className={`mt-8 inline-flex min-h-[44px] min-w-[10rem] items-center justify-center rounded-none border px-5 py-2.5 text-xs font-bold uppercase tracking-[0.18em] transition-colors ${
+                className={`mt-6 inline-flex min-h-[44px] min-w-[10rem] items-center justify-center rounded-none border px-5 py-2.5 text-xs font-bold uppercase tracking-[0.18em] transition-colors sm:mt-8 ${
                   dark
                     ? "border-white text-white hover:bg-white/10"
                     : "border-black text-black hover:bg-zinc-100"
