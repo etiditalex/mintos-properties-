@@ -16,9 +16,9 @@ import { FadeIn } from "@/components/ui/FadeIn";
 import { getAllProperties } from "@/services/propertyService";
 import { getPublishedTestimonials } from "@/services/testimonialService";
 
-/** Home hero — Cloudinary (mintos_2). */
+/** Home hero — Cloudinary (hero_nvkdim). */
 const HERO_IMAGE =
-  "https://res.cloudinary.com/dyfnobo9r/image/upload/v1777709410/mintos_2_pw1jze.jpg";
+  "https://res.cloudinary.com/dyfnobo9r/image/upload/v1777866001/hero_nvkdim.jpg";
 
 export default async function Home() {
   const allProperties = await getAllProperties();
@@ -31,7 +31,7 @@ export default async function Home() {
         <div className="relative isolate flex min-h-[100svh] w-full flex-col">
           <Image
             src={HERO_IMAGE}
-            alt="Luxury apartment buildings at dusk"
+            alt="Modern high-rise residential building viewed from below against a blue sky"
             fill
             priority
             className="object-cover object-center"
@@ -57,7 +57,7 @@ export default async function Home() {
       <section className="relative z-0 hidden min-h-[100vh] w-full overflow-hidden md:block">
         <Image
           src={HERO_IMAGE}
-          alt="Luxury apartment buildings at dusk"
+          alt="Modern high-rise residential building viewed from below against a blue sky"
           fill
           priority
           className="object-cover object-center"
