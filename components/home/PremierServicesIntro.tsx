@@ -10,7 +10,7 @@ export function PremierServicesIntro() {
       className="border-t border-zinc-100 bg-white px-4 py-12 sm:px-6 sm:py-16 lg:px-10 lg:py-20"
       aria-labelledby="mintos-real-estate-heading"
     >
-      <div className="mx-auto w-full max-w-7xl">
+      <div className="mx-auto w-full max-w-7xl text-center sm:text-left">
         <FadeIn>
           <h2
             id="mintos-real-estate-heading"
@@ -18,7 +18,7 @@ export function PremierServicesIntro() {
           >
             Mintos Real Estate — Nairobi &amp; the coast
           </h2>
-          <div className="mt-5 w-full max-w-none space-y-3.5 text-[0.9375rem] leading-[1.6] text-zinc-600 sm:mt-6 sm:space-y-4 sm:text-base sm:leading-[1.65] md:text-lg md:leading-relaxed">
+          <div className="mx-auto mt-5 w-full max-w-none space-y-3.5 text-[0.9375rem] leading-[1.6] text-zinc-600 text-justify sm:mx-0 sm:mt-6 sm:space-y-4 sm:text-base sm:leading-[1.65] sm:text-left md:text-lg md:leading-relaxed">
             <p>
               Mintos Real Estate is a leading provider of high-end properties across Kenya&apos;s
               coastal region and Nairobi at large. From ocean-facing residences and hospitality-led
