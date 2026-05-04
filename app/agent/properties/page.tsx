@@ -328,6 +328,7 @@ export default function AgentPropertiesPage() {
   const [error, setError] = useState<string | null>(null);
   const [message, setMessage] = useState<string | null>(null);
   const [creating, setCreating] = useState(false);
+  const [createStatus, setCreateStatus] = useState<string | null>(null);
   const [importing, setImporting] = useState(false);
   const [loading, setLoading] = useState(true);
   const [createImages, setCreateImages] = useState<File[]>([]);
@@ -451,6 +452,7 @@ export default function AgentPropertiesPage() {
     const supabase = createSupabaseBrowserClient();
 
     for (let index = 0; index < files.length; index += 1) {
+      setCreateStatus(`Uploading images (${index + 1}/${files.length})...`);
       const file = files[index];
       const extension = file.name.split(".").pop()?.toLowerCase() || "jpg";
       const path = `${propertyId}/${crypto.randomUUID()}.${extension}`;
@@ -488,6 +490,7 @@ export default function AgentPropertiesPage() {
     setCreating(true);
     setError(null);
     setMessage(null);
+    setCreateStatus("Checking your session...");
     const formEl = event.currentTarget;
     const formData = new FormData(formEl);
 
@@ -501,6 +504,7 @@ export default function AgentPropertiesPage() {
       if (!authData.user) {
         setError("Login as agent to create listings.");
         setCreating(false);
+        setCreateStatus(null);
         return;
       }
 
@@ -536,6 +540,7 @@ export default function AgentPropertiesPage() {
         agent_id: authData.user.id,
       };
 
+      setCreateStatus("Creating listing...");
       const { data: insertedProperty, error: insertError } = await withTimeout(
         supabase.from("properties").insert(payload).select("id").single(),
         20000,
@@ -544,6 +549,7 @@ export default function AgentPropertiesPage() {
       if (insertError) {
         setError(insertError.message);
         setCreating(false);
+        setCreateStatus(null);
         return;
       }
 
@@ -556,6 +562,7 @@ export default function AgentPropertiesPage() {
       setSelectedPropertyType(residentialPropertyTypes[0]);
       setSelectedLandType(landCategoryList[0].title);
       setCreateImages([]);
+      setCreateStatus("Refreshing inventory...");
       await withTimeout(load(), 15000, "Created successfully, but refresh timed out. Click Refresh.");
       setMessage("Property created successfully.");
     } catch (createError) {
@@ -566,6 +573,7 @@ export default function AgentPropertiesPage() {
       }
     } finally {
       setCreating(false);
+      setCreateStatus(null);
     }
   };
 
@@ -827,6 +835,9 @@ export default function AgentPropertiesPage() {
                 </button>
               </form>
 
+              {creating && createStatus && (
+                <p className="mt-4 text-sm font-medium text-zinc-600">{createStatus}</p>
+              )}
               {error && <p className="mt-4 text-sm text-red-600">{error}</p>}
               {message && <p className="mt-2 text-sm text-emerald-700">{message}</p>}
             </div>
